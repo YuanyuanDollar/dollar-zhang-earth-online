@@ -1,2 +1,2 @@
-# actuarial-portfolios
-Main satisfying projects in my UNSW master degree
+# actuarial-data-science-portfolio
+Selected actuarial projects from my UNSW master’s degree
