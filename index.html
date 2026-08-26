@@ -1,0 +1,431 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dollar Zhang 🌏 online</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <canvas class="smooth-cursor-canvas" aria-hidden="true"></canvas>
+    <header class="site-header">
+      <nav class="top-nav" aria-label="Primary navigation">
+        <a class="is-active" href="#hero" aria-current="page">Home</a>
+        <span aria-hidden="true">·</span>
+        <a href="#portfolio">Projects</a>
+        <span aria-hidden="true">·</span>
+        <a href="#timeline">Journey</a>
+        <span aria-hidden="true">·</span>
+        <a href="#beyond-work">Beyond Work</a>
+      </nav>
+    </header>
+    <main class="page-shell">
+      <section id="hero" class="hero-section" aria-label="Dollar Zhang hero">
+        <div class="floating-title" data-text-scatter aria-label="Dollar Zhang, online worldwide">
+          <span class="scatter-word scatter-word-dollar" aria-hidden="true">
+            <span class="scatter-letter">D</span><span class="scatter-letter">o</span><span class="scatter-letter">l</span><span class="scatter-letter">l</span><span class="scatter-letter">a</span><span class="scatter-letter">r</span>
+          </span>
+          <span class="title-sticker-gap" aria-hidden="true"></span>
+          <span class="scatter-word scatter-word-zhang" aria-hidden="true">
+            <span class="scatter-letter">Z</span><span class="scatter-letter">h</span><span class="scatter-letter">a</span><span class="scatter-letter">n</span><span class="scatter-letter">g</span>
+          </span>
+          <span class="hero-online-status" aria-hidden="true"><span class="online-quote">‘</span><canvas class="online-globe" width="96" height="96"></canvas><span class="online-label">online</span></span>
+        </div>
+
+        <div class="hero-sticker-wrap">
+          <canvas class="hero-sticker hero-character-canvas" width="588" height="900" aria-label="Dollar Zhang animated sticker"></canvas>
+          <video
+            class="hero-character-video-source"
+            muted
+            playsinline
+            preload="auto"
+            aria-hidden="true"
+            tabindex="-1"
+          ></video>
+        </div>
+      </section>
+
+      <section id="about" class="intro-section">
+        <div class="intro-copy">
+          <div class="blur-highlight intro-story" data-blur-highlight>
+            <h1 class="intro-heading"><span class="blur-piece">Hi, I’m Dollar Zhang.</span></h1>
+            <p class="intro-welcome"><span class="blur-piece">Nice to see you here ;&gt;</span></p>
+            <p>
+              <span class="blur-piece">I’ve been studying actuarial science for</span>
+              <mark class="highlight-piece"><span class="blur-piece">six years</span></mark><span class="blur-piece">.</span>
+            </p>
+            <h2><span class="blur-piece">WHY AM I STILL ON THIS PATH?</span></h2>
+            <p>
+              <span class="blur-piece">Because I genuinely enjoy learning,</span><br />
+              <span class="blur-piece">challenging myself,</span><br />
+              <span class="blur-piece">and becoming a little better at what I do.</span>
+            </p>
+            <p class="journey-reflection">
+              <span class="blur-piece">The journey has never been easy for me.</span><br />
+              <span class="blur-piece">I’m not naturally gifted (sorry!).</span><br />
+              <span class="blur-piece">What I do have is</span>
+              <mark class="highlight-piece"><span class="blur-piece">persistence, focus, and passion.</span></mark>
+            </p>
+            <p class="intro-invitation">
+              <span class="blur-piece">Want to know me better?</span><br />
+              <span class="blur-piece">COME ON IN ↓</span>
+            </p>
+          </div>
+        </div>
+
+        <div class="lanyard-scene" aria-label="photo badge">
+          <div class="lanyard-rig" aria-label="interactive lanyard">
+            <svg class="lanyard-cord" viewBox="0 0 560 650" aria-hidden="true">
+              <defs>
+                <linearGradient id="unswBandYellow" x1="0" y1="0" x2="1" y2="0">
+                  <stop offset="0" stop-color="#e3ad00" />
+                  <stop offset="0.18" stop-color="#ffd736" />
+                  <stop offset="0.52" stop-color="#ffcf00" />
+                  <stop offset="0.82" stop-color="#ffd943" />
+                  <stop offset="1" stop-color="#dca500" />
+                </linearGradient>
+                <filter id="lanyardShadow" x="-40%" y="-40%" width="180%" height="180%">
+                  <feDropShadow dx="0" dy="7" stdDeviation="6" flood-color="#122c4f" flood-opacity="0.18" />
+                </filter>
+                <symbol id="unswCrestMark" viewBox="0 0 28 34">
+                  <path d="M2 2 H26 V17 C26 24 21 29 14 31 C7 29 2 24 2 17 Z" fill="#fff" stroke="#111" stroke-width="2" />
+                  <path d="M11 4 H17 V11 H24 V17 H17 V27 H11 V17 H4 V11 H11 Z" fill="#cf202f" />
+                  <rect x="3" y="3" width="22" height="5" fill="#111" />
+                  <circle cx="14" cy="14" r="3.4" fill="#d6a520" stroke="#111" stroke-width="1.2" />
+                  <path d="M5 27 Q14 31 23 27 L24 31 Q14 35 4 31 Z" fill="#f2f2ee" stroke="#111" stroke-width="1.4" />
+                </symbol>
+              </defs>
+
+              <path id="leftLanyardShadow" class="strap-shadow" d="M126 -130 C160 -14 218 82 290 164" />
+              <path id="rightLanyardShadow" class="strap-shadow" d="M434 -130 C400 -14 342 82 270 164" />
+              <path id="leftLanyardPath" class="strap-band" d="M126 -130 C160 -14 218 82 290 164" />
+              <path id="rightLanyardPath" class="strap-band" d="M434 -130 C400 -14 342 82 270 164" />
+
+              <g class="strap-brand" data-side="left" data-progress="0.50">
+                <use class="mini-crest" href="#unswCrestMark" x="-41" y="-13" width="24" height="29" />
+                <text class="unsw-word" x="-12" y="-4">UNSW</text>
+                <text class="sydney-word" x="-11" y="9">SYDNEY</text>
+              </g>
+              <g class="strap-brand" data-side="left" data-progress="0.84">
+                <use class="mini-crest" href="#unswCrestMark" x="-41" y="-13" width="24" height="29" />
+                <text class="unsw-word" x="-12" y="-4">UNSW</text>
+                <text class="sydney-word" x="-11" y="9">SYDNEY</text>
+              </g>
+              <g class="strap-brand" data-side="right" data-progress="0.50">
+                <use class="mini-crest" href="#unswCrestMark" x="-41" y="-13" width="24" height="29" />
+                <text class="unsw-word" x="-12" y="-4">UNSW</text>
+                <text class="sydney-word" x="-11" y="9">SYDNEY</text>
+              </g>
+              <g class="strap-brand" data-side="right" data-progress="0.84">
+                <use class="mini-crest" href="#unswCrestMark" x="-41" y="-13" width="24" height="29" />
+                <text class="unsw-word" x="-12" y="-4">UNSW</text>
+                <text class="sydney-word" x="-11" y="9">SYDNEY</text>
+              </g>
+            </svg>
+            <div class="badge-dragger" id="draggableBadge" role="button" tabindex="0" aria-label="Draggable photo badge">
+              <div class="clip"><span class="clip-rivet"></span></div>
+              <figure class="badge-card">
+                <img src="./assets/badge-photo.jpg" alt="Dollar Zhang portrait" />
+                <figcaption class="badge-signature" aria-label="Dollar Zhang signature">Dollar Zhang</figcaption>
+              </figure>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="timeline" class="timeline-section">
+        <div class="journey-reveal" data-3d-text-reveal aria-label="My 6-Year Actuarial Journey">
+          <div class="journey-reveal-sticky">
+            <h2 class="journey-reveal-title" aria-hidden="true">
+              <span class="journey-reveal-line">My</span>
+              <span class="journey-reveal-line">6-Year</span>
+              <span class="journey-reveal-line">Actuarial</span>
+              <span class="journey-reveal-line">Journey</span>
+            </h2>
+          </div>
+        </div>
+        <div class="center-timeline">
+          <article class="timeline-item">
+            <time><span class="timeline-index">01</span><span class="timeline-label">— Foundation · 2020–2024</span></time>
+            <div class="timeline-content">
+              <h3>Xi’an Jiaotong-Liverpool University</h3>
+              <p class="timeline-degree"><em>Bachelor of Actuarial Science</em></p>
+              <p class="timeline-date">Sep 2020 – Jun 2024</p>
+              <ul class="timeline-details">
+                <li><strong>Bachelor’s Average</strong> · 74/100</li>
+                <li><strong>2022–23</strong> · University Academic Achievement Award</li>
+                <li>
+                  <strong>IFoA Exemptions</strong> · CM1 · CM2 · CS1
+                  <span>Awarded all IFoA exemptions available through my undergraduate programme.</span>
+                </li>
+                <li>
+                  <strong>2024</strong> · Actuaries of Tomorrow Scholarship
+                  <span>IFoA Foundation</span>
+                </li>
+              </ul>
+              <p class="timeline-summary">Building a strong foundation in actuarial science, statistics, risk and insurance.</p>
+            </div>
+          </article>
+          <article class="timeline-item">
+            <time><span class="timeline-index">02</span><span class="timeline-label">— Exploration · 2022–2024</span></time>
+            <div class="timeline-content">
+              <h3>Exploring beyond actuarial science</h3>
+              <p class="timeline-event">
+                <strong>Jul 2022</strong>
+                <span>Insurance Sales Director Assistant Intern</span>
+                Xiamen Ping An Insurance
+              </p>
+              <p class="timeline-event">
+                <strong>Jul – Aug 2024</strong>
+                <span>Web Designer</span>
+                Xiamen OUHUA
+              </p>
+              <div class="easter-egg" data-easter-egg>
+                <button
+                  class="easter-egg-trigger"
+                  type="button"
+                  aria-expanded="false"
+                  aria-controls="family-business-easter-egg"
+                >Easter Egg ↗</button>
+                <aside
+                  class="easter-egg-popover"
+                  id="family-business-easter-egg"
+                  role="note"
+                  aria-labelledby="family-business-easter-egg-title"
+                  aria-hidden="true"
+                >
+                  <h4 id="family-business-easter-egg-title">A “What If?” Easter Egg</h4>
+                  <p>My family runs an <strong>ink manufacturing business</strong> and, at the time, was planning to expand into the <strong>Southeast Asian market</strong>. I wondered: <strong>Would working in the family business actually suit me better?</strong> So I decided to get involved and find out for myself.</p>
+                  <p>I started by helping build a new website for its overseas expansion and thinking about how the business could present itself to international customers.</p>
+                  <p>The experience gave me a taste of business, design, and entrepreneurship, but more importantly, it helped me understand myself better. I realised that while I enjoy the business side of things, <strong>I’m most engaged when my work also involves analytical thinking and problem-solving.</strong></p>
+                  <p>That experience didn’t pull me away from actuarial science. In a way, it helped me understand <strong>why I’m still choosing it.</strong></p>
+                </aside>
+              </div>
+              <p class="timeline-summary">Exploring insurance, business and digital problem-solving beyond academic study.</p>
+            </div>
+          </article>
+          <article class="timeline-item">
+            <time><span class="timeline-index">03</span><span class="timeline-label">— Deepening · 2024–2026</span></time>
+            <div class="timeline-content">
+              <h3>UNSW Sydney</h3>
+              <p class="timeline-degree"><em>Master of Actuarial Science</em></p>
+              <p class="timeline-date">Sep 2024 – Expected Sep 2026</p>
+              <p class="timeline-highlight"><strong>Current WAM · 71.3</strong></p>
+              <div class="easter-egg" data-easter-egg>
+                <button
+                  class="easter-egg-trigger"
+                  type="button"
+                  aria-expanded="false"
+                  aria-controls="dsp-easter-egg"
+                >Easter Egg ↗</button>
+                <aside
+                  class="easter-egg-popover easter-egg-popover--with-reaction"
+                  id="dsp-easter-egg"
+                  role="note"
+                  aria-labelledby="dsp-easter-egg-title"
+                  aria-hidden="true"
+                >
+                  <div class="easter-egg-heading">
+                    <h4 id="dsp-easter-egg-title">A Slightly Painful Easter Egg</h4>
+                    <img
+                      class="easter-egg-reaction"
+                      src="./assets/dsp-easter-egg-still.png"
+                      data-still-src="./assets/dsp-easter-egg-still.png"
+                      data-animated-src="./assets/dsp-easter-egg.webp"
+                      alt=""
+                      aria-hidden="true"
+                    />
+                  </div>
+                  <p>I got <strong>39/40</strong> for my DSP project — <strong>Freely</strong>, which was later selected as an exemplar. Then came the final. I mistakenly brought a calculator into an exam where calculators weren’t allowed, which resulted in a <strong>zero for the final and a fail for DSP</strong>.</p>
+                  <p>Let’s just say I now have a very healthy respect for regulatory requirements, especially in actuarial product design.</p>
+                  <p>One result doesn’t get to define the whole journey. I’m proud of the work I put into the project, and for me, that’s enough.</p>
+                  <p class="easter-egg-closing"><strong>DSP, round two — I’m ready.</strong></p>
+                </aside>
+              </div>
+              <p><strong>Working towards further actuarial exemptions:</strong><br />CS2 · CB1 · CB2 · ACC1 · ACC2</p>
+              <p><strong>Growing analytical toolkit:</strong><br />Risk · Insurance · Statistics · Machine Learning · Time Series · Copulas</p>
+              <p class="timeline-summary">Moving from actuarial foundations into modelling, risk analytics and real-world decision-making.</p>
+            </div>
+          </article>
+          <article class="timeline-item">
+            <time><span class="timeline-index">04</span><span class="timeline-label">— Application · 2025–2026</span></time>
+            <div class="timeline-content">
+              <h3>Turning actuarial concepts into applied work</h3>
+              <p class="timeline-event">
+                <strong>2025</strong>
+                <span>3 projects recognised as outstanding work</span>
+                Freely · Reverse Garbage · Airbnb
+              </p>
+              <p class="timeline-event">
+                <strong>2026</strong>
+                <span>2 further projects recognised for strong performance</span>
+                SpaceY · Flood Insurance
+              </p>
+              <p class="timeline-summary">Applying actuarial thinking to insurance, risk, data and commercial decisions.</p>
+            </div>
+          </article>
+          <article class="timeline-item">
+            <time><span class="timeline-index">05</span><span class="timeline-label">— What’s Next · 2026 →</span></time>
+            <div class="timeline-content">
+              <h3>From actuarial student to actuarial professional.</h3>
+              <p class="timeline-next">Underwriting · Pricing · Product · Analytics</p>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section id="portfolio" class="portfolio-section">
+        <h2 class="visually-hidden">What I’m proudest of is the work in my portfolio.</h2>
+        <div class="portfolio-text-path" data-text-path aria-hidden="true">
+          <svg class="portfolio-text-path-svg" viewBox="0 0 1180 220" role="presentation">
+            <path
+              class="portfolio-text-path-guide"
+              d="M -240 120 C -170 35 -90 205 0 120 S 170 35 260 120 S 430 205 520 120 S 690 35 780 120 S 950 205 1040 120 S 1230 35 1410 120"
+            />
+            <path
+              id="portfolio-title-path"
+              d="M -240 120 C -170 35 -90 205 0 120 S 170 35 260 120 S 430 205 520 120 S 690 35 780 120 S 950 205 1040 120 S 1230 35 1410 120"
+              fill="none"
+              stroke="none"
+            />
+            <text class="portfolio-text-path-copy">
+              <textPath href="#portfolio-title-path" startOffset="2%">What I’m proudest of is the work in my portfolio.</textPath>
+            </text>
+          </svg>
+        </div>
+        <div class="coverflow-carousel" data-coverflow role="region" aria-roledescription="carousel" aria-label="Portfolio projects">
+          <div class="coverflow-frame" tabindex="0">
+            <div class="coverflow-track" role="list">
+              <article class="coverflow-slide freely-slide" role="listitem" aria-roledescription="slide" aria-label="1 of 5: Freely">
+                <img src="./assets/freely.jpg" alt="Freely project cover with a surfer riding a wave" draggable="false" />
+                <button class="project-open-button" type="button" data-open-freely aria-label="Open Freely project">
+                  <span>View project</span><span aria-hidden="true">↗</span>
+                </button>
+              </article>
+              <article class="coverflow-slide" role="listitem" aria-roledescription="slide" aria-label="2 of 5: SpaceY">
+                <img src="./assets/spacey.jpg" alt="SpaceY project cover showing planets and an asteroid field" draggable="false" />
+                <button class="project-open-button" type="button" data-open-report data-project-index="02" data-project-title="SpaceY" data-report-pages="66" data-report-src="./assets/spacey-report.pdf#view=FitH" aria-label="Open SpaceY project">
+                  <span>View project</span><span aria-hidden="true">↗</span>
+                </button>
+              </article>
+              <article class="coverflow-slide" role="listitem" aria-roledescription="slide" aria-label="3 of 5: Airbnb Pricing Model">
+                <img src="./assets/airbnb-pricing.jpg" alt="Airbnb Pricing Model project cover" draggable="false" />
+                <button class="project-open-button" type="button" data-open-report data-project-index="03" data-project-title="Airbnb Pricing Model" data-report-pages="63" data-report-src="./assets/airbnb-pricing-report.pdf#view=FitH" aria-label="Open Airbnb Pricing Model project">
+                  <span>View project</span><span aria-hidden="true">↗</span>
+                </button>
+              </article>
+              <article class="coverflow-slide" role="listitem" aria-roledescription="slide" aria-label="4 of 5: Reverse Garbage">
+                <img src="./assets/reverse-garbage.jpg" alt="Reverse Garbage project cover" draggable="false" />
+                <button class="project-open-button" type="button" data-open-report data-project-index="04" data-project-title="Reverse Garbage" data-report-pages="27" data-report-src="./assets/reverse-garbage-final-report.pdf#view=FitH" aria-label="Open Reverse Garbage project">
+                  <span>View project</span><span aria-hidden="true">↗</span>
+                </button>
+              </article>
+              <article class="coverflow-slide" role="listitem" aria-roledescription="slide" aria-label="5 of 5: FloodProtect Plus">
+                <img src="./assets/flood-protect.jpg" alt="FloodProtect Plus project cover showing a flooded town" draggable="false" />
+                <button class="project-open-button" type="button" data-open-report data-project-index="05" data-project-title="FloodProtect+" data-report-pages="12" data-report-src="./assets/floodprotect-plus-slides.pdf#view=FitH" aria-label="Open FloodProtect Plus project">
+                  <span>View project</span><span aria-hidden="true">↗</span>
+                </button>
+              </article>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <dialog class="project-dialog" id="freelyProjectDialog" aria-labelledby="freelyProjectTitle">
+        <div class="project-dialog-shell">
+          <header class="project-dialog-header">
+            <div>
+              <p class="project-dialog-index">01 / Selected work</p>
+              <h2 id="freelyProjectTitle">Freely</h2>
+            </div>
+            <button class="project-dialog-close" type="button" data-close-project aria-label="Close Freely project" title="Close">×</button>
+          </header>
+
+          <div class="project-dialog-controls">
+            <div class="project-view-tabs" role="tablist" aria-label="Freely project files">
+              <button id="freelyDashboardTab" class="project-view-tab is-active" type="button" role="tab" aria-selected="true" aria-controls="freelyDashboardPanel" data-project-tab="dashboard">Dashboard</button>
+              <button id="freelyReportTab" class="project-view-tab" type="button" role="tab" aria-selected="false" aria-controls="freelyReportPanel" data-project-tab="report" tabindex="-1">Final Report</button>
+            </div>
+          </div>
+
+          <section id="freelyDashboardPanel" class="project-view-panel" role="tabpanel" aria-labelledby="freelyDashboardTab" data-project-panel="dashboard">
+            <div class="project-view-toolbar">
+              <span>Interactive conversion-rate dashboard</span>
+              <a href="https://yuanzhuang.shinyapps.io/Freely_Conversion_Rate_Analysis_Dashboard/" target="_blank" rel="noopener noreferrer">Open dashboard ↗</a>
+            </div>
+            <div class="project-view-stage">
+              <div class="project-view-loading" aria-hidden="true">Loading dashboard…</div>
+              <iframe
+                class="project-viewer project-dashboard-viewer"
+                title="Freely interactive dashboard"
+                data-src="https://yuanzhuang.shinyapps.io/Freely_Conversion_Rate_Analysis_Dashboard/"
+                loading="lazy"
+              ></iframe>
+            </div>
+          </section>
+
+          <section id="freelyReportPanel" class="project-view-panel" role="tabpanel" aria-labelledby="freelyReportTab" data-project-panel="report" hidden>
+            <div class="project-view-toolbar">
+              <span>Final report · 24 pages</span>
+              <a href="./assets/freely-final-report.pdf" target="_blank" rel="noopener">Open report ↗</a>
+            </div>
+            <div class="project-view-stage project-report-stage">
+              <div class="project-view-loading" aria-hidden="true">Loading report…</div>
+              <iframe
+                class="project-viewer project-report-viewer"
+                title="Freely final report"
+                data-src="./assets/freely-final-report.pdf#view=FitH"
+                loading="lazy"
+              ></iframe>
+            </div>
+          </section>
+        </div>
+      </dialog>
+
+      <dialog class="project-dialog" id="portfolioReportDialog" aria-labelledby="portfolioReportTitle">
+        <div class="project-dialog-shell single-report-dialog-shell">
+          <header class="project-dialog-header">
+            <div>
+              <p class="project-dialog-index" data-report-index>02 / Selected work</p>
+              <h2 id="portfolioReportTitle" data-report-title>Project</h2>
+            </div>
+            <button class="project-dialog-close" type="button" data-close-report aria-label="Close project report" title="Close">×</button>
+          </header>
+
+          <section class="project-view-panel project-single-report-panel">
+            <div class="project-view-toolbar">
+              <span data-report-meta>Project report</span>
+              <a data-report-link href="#" target="_blank" rel="noopener">Open report ↗</a>
+            </div>
+            <div class="project-view-stage project-report-stage">
+              <div class="project-view-loading" aria-hidden="true">Loading report…</div>
+              <iframe class="project-viewer" title="Portfolio project report" data-report-viewer></iframe>
+            </div>
+          </section>
+        </div>
+      </dialog>
+
+      <section id="beyond-work" class="internship-section">
+        <p>Sincerely seeking opportunities in insurance, particularly within underwriting or product teams. I’m ready to learn, contribute, and do my best to create meaningful value through my work!!!</p>
+        <a class="resume-button" href="#">Download Resume</a>
+        <nav class="contact-links" aria-label="Contact Dollar Zhang">
+          <a class="contact-link" href="#" data-contact-missing data-label="Email · link pending" aria-label="Email link pending" title="Email">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="m4 7 8 6 8-6"></path></svg>
+          </a>
+          <a class="contact-link" href="#" data-contact-missing data-label="LinkedIn · link pending" aria-label="LinkedIn link pending" title="LinkedIn">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3"></rect><path d="M8 10v7M8 7v.01M12 17v-4a3 3 0 0 1 6 0v4M12 10v7"></path></svg>
+          </a>
+          <a class="contact-link" href="#" data-contact-missing data-label="WeChat · link pending" aria-label="WeChat link pending" title="WeChat">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 7.5c0 3-2.8 5.5-6.2 5.5-1 0-1.9-.2-2.7-.6L3 13.7l.8-2.4A5 5 0 0 1 2 7.5C2 4.5 4.8 2 8.3 2s6.2 2.5 6.2 5.5Z"></path><path d="M10 13c0 2.5 2.5 4.5 5.5 4.5.8 0 1.6-.1 2.3-.4L21 19l-.9-2.7a4 4 0 0 0 .9-2.5c0-2.5-2.5-4.5-5.5-4.5-.5 0-1 .1-1.5.2"></path><path d="M6 6.5h.01M10.5 6.5h.01M14 13h.01M18 13h.01"></path></svg>
+          </a>
+          <a class="contact-link" href="#" data-contact-missing data-label="WhatsApp · link pending" aria-label="WhatsApp link pending" title="WhatsApp">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11.5a8 8 0 0 1-11.8 7L4 20l1.5-4.1A8 8 0 1 1 20 11.5Z"></path><path d="M9 8.5c.4 2.8 2 4.4 4.8 5.2l1.2-1.1 2 .9c-.2 1.4-1.3 2.3-2.7 2.2-4.1-.3-7.4-3.5-7.8-7.6C6.4 6.8 7.3 5.7 8.7 5.5l.9 2-1.1 1Z"></path></svg>
+          </a>
+        </nav>
+      </section>
+    </main>
+    <script src="./assets/hero-character-data.js"></script>
+    <script src="./assets/three.min.js"></script>
+    <script src="./script.js"></script>
+  </body>
+</html>
