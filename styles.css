@@ -1040,44 +1040,20 @@ svg {
   user-select: none;
 }
 
-.project-open-button {
-  position: absolute;
-  right: 14px;
-  bottom: 14px;
-  display: inline-flex;
-  min-height: 38px;
-  align-items: center;
-  gap: 8px;
-  padding: 0 13px;
+.project-cover-button {
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding: 0;
   border: 0;
-  border-radius: 4px;
-  color: #fff;
-  background: rgba(18, 44, 79, 0.92);
-  box-shadow: 0 8px 20px rgba(18, 44, 79, 0.22);
-  font: inherit;
-  font-size: 0.75rem;
-  font-weight: 800;
-  letter-spacing: 0;
-  opacity: 0;
-  pointer-events: none;
-  transform: translateY(8px);
-  transition: background 160ms ease, opacity 180ms ease, transform 180ms ease;
+  border-radius: inherit;
+  background: transparent;
+  cursor: pointer;
 }
 
-.coverflow-slide.is-selected .project-open-button {
-  opacity: 1;
-  pointer-events: auto;
-  transform: translateY(0);
-}
-
-.project-open-button:hover,
-.project-open-button:focus-visible {
-  background: var(--green);
-}
-
-.project-open-button:focus-visible {
-  outline: 2px solid #fff;
-  outline-offset: 2px;
+.project-cover-button:focus-visible {
+  outline: 3px solid var(--green);
+  outline-offset: -4px;
 }
 
 .coverflow-carousel:not(.is-ready) .coverflow-slide {
@@ -1115,26 +1091,20 @@ svg {
 
 .project-dialog-header {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: space-between;
   gap: 24px;
-  padding: 24px 28px 18px;
+  min-height: 66px;
+  padding: 12px 28px;
   border-bottom: 1px solid var(--line);
 }
 
 .project-dialog-index {
-  margin: 0 0 4px;
+  margin: 0;
   color: var(--green);
   font-size: 0.72rem;
   font-weight: 800;
   text-transform: uppercase;
-}
-
-.project-dialog-header h2 {
-  margin: 0;
-  font-size: clamp(2rem, 4vw, 3.7rem);
-  line-height: 0.9;
-  letter-spacing: 0;
 }
 
 .project-dialog-close {
@@ -1214,6 +1184,156 @@ svg {
   display: grid;
   min-height: 0;
   grid-template-rows: auto minmax(0, 1fr);
+}
+
+.project-single-report-panel.is-spacey-project {
+  display: block;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  background: var(--paper);
+}
+
+.spacey-project-intro[hidden] {
+  display: none;
+}
+
+.spacey-project-cover {
+  width: min(820px, calc(100% - 56px));
+  aspect-ratio: 16 / 9;
+  margin: 36px auto 0;
+  overflow: hidden;
+  border-radius: 8px;
+  background: #070706;
+}
+
+.spacey-project-cover img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 18%;
+}
+
+.spacey-task-intro {
+  width: min(820px, calc(100% - 56px));
+  margin: 0 auto;
+  padding: clamp(38px, 6vw, 70px) 0 clamp(48px, 7vw, 84px);
+  color: var(--deep);
+  font-size: clamp(1.05rem, 1.7vw, 1.3rem);
+  font-weight: 400;
+  line-height: 1.72;
+  opacity: 0.3;
+  filter: blur(8px);
+}
+
+.spacey-task-intro :is(h2, p, mark) {
+  color: inherit;
+  font-weight: inherit;
+  letter-spacing: 0;
+}
+
+.spacey-task-intro strong {
+  color: inherit;
+  font-weight: 800;
+}
+
+.spacey-intro-title {
+  margin: 0 0 18px;
+  font-size: clamp(1.8rem, 3.8vw, 3.3rem);
+  line-height: 1.08;
+}
+
+.spacey-challenge-line {
+  display: inline-block;
+  background-image: linear-gradient(var(--green), var(--green));
+  background-repeat: no-repeat;
+  background-position: 0 calc(100% - 0.12em);
+  background-size: 100% 0.13em;
+  color: var(--blue);
+}
+
+.spacey-task-intro p {
+  margin: 0;
+}
+
+.spacey-challenge-line + p {
+  margin-top: clamp(34px, 5vw, 56px);
+}
+
+.spacey-task-intro p + p,
+.spacey-business-lines + p {
+  margin-top: 30px;
+}
+
+.spacey-business-lines {
+  display: block;
+  margin: 16px 0 30px;
+  padding-left: 1.35em;
+  list-style: disc;
+}
+
+.spacey-business-lines li {
+  display: list-item;
+  min-height: 0;
+  padding: 0;
+}
+
+.spacey-business-lines li + li {
+  margin-top: 6px;
+}
+
+.spacey-business-lines li::marker {
+  color: var(--green);
+}
+
+.spacey-decision-question {
+  margin-top: 30px;
+}
+
+.spacey-report-lead {
+  max-width: 690px;
+  margin-top: clamp(46px, 7vw, 72px) !important;
+}
+
+.project-file-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px 22px;
+  margin-top: 18px;
+}
+
+.spacey-file-link {
+  display: flex;
+  width: fit-content;
+  align-items: center;
+  margin-top: 18px;
+  color: var(--blue);
+  font-weight: 800;
+  text-decoration: underline;
+  text-decoration-color: var(--green);
+  text-decoration-thickness: 0.14em;
+  text-underline-offset: 0.18em;
+}
+
+.project-file-links .spacey-file-link {
+  margin-top: 0;
+}
+
+.spacey-file-link:hover,
+.spacey-file-link:focus-visible {
+  color: var(--green);
+}
+
+.spacey-task-intro.blur-highlight.is-visible {
+  animation: blurTextIn 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.is-spacey-project .project-view-toolbar {
+  display: none;
+}
+
+.is-spacey-project .project-report-stage {
+  display: none;
 }
 
 .project-view-toolbar {
@@ -1519,21 +1639,14 @@ body.project-dialog-open {
     padding: 32px 0 44px;
   }
 
-  .project-open-button {
-    right: 9px;
-    bottom: 9px;
-    min-height: 34px;
-    padding: 0 10px;
-    font-size: 0.68rem;
-  }
-
   .project-dialog {
     width: calc(100vw - 16px);
     height: calc(100dvh - 16px);
   }
 
   .project-dialog-header {
-    padding: 20px 18px 15px;
+    min-height: 60px;
+    padding: 9px 18px;
   }
 
   .project-dialog-controls {
@@ -1550,6 +1663,33 @@ body.project-dialog-open {
     min-height: 56px;
     padding: 8px 18px;
     font-size: 0.72rem;
+  }
+
+  .spacey-task-intro {
+    width: calc(100% - 36px);
+    padding: 42px 0 64px;
+    font-size: 1rem;
+    line-height: 1.65;
+  }
+
+  .spacey-task-intro h2 {
+    margin-bottom: 38px;
+    font-size: clamp(1.85rem, 9.5vw, 2.75rem);
+  }
+
+  .spacey-business-lines {
+    grid-template-columns: 1fr;
+  }
+
+  .spacey-business-lines li:nth-child(odd),
+  .spacey-business-lines li:nth-child(even) {
+    padding: 0;
+    border-left: 0;
+  }
+
+  .is-spacey-project .project-report-stage {
+    height: 72vh;
+    min-height: 480px;
   }
 
 }
@@ -1569,6 +1709,12 @@ body.project-dialog-open {
   .highlight-piece::before,
   .blur-highlight.is-visible .highlight-piece::before {
     transform: scaleX(1);
+    animation: none;
+  }
+
+  .spacey-task-intro .highlight-piece,
+  .spacey-task-intro.is-visible .highlight-piece {
+    background-size: 100% 100%;
     animation: none;
   }
 

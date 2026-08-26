@@ -296,34 +296,29 @@
         <div class="coverflow-carousel" data-coverflow role="region" aria-roledescription="carousel" aria-label="Portfolio projects">
           <div class="coverflow-frame" tabindex="0">
             <div class="coverflow-track" role="list">
-              <article class="coverflow-slide freely-slide" role="listitem" aria-roledescription="slide" aria-label="1 of 5: Freely">
-                <img src="./assets/freely.jpg" alt="Freely project cover with a surfer riding a wave" draggable="false" />
-                <button class="project-open-button" type="button" data-open-freely aria-label="Open Freely project">
-                  <span>View project</span><span aria-hidden="true">↗</span>
+              <article class="coverflow-slide freely-slide" role="listitem" aria-roledescription="slide" aria-label="1 of 5: Freely" data-open-freely>
+                <button class="project-cover-button" type="button" aria-label="Open Freely project">
+                  <img src="./assets/freely.jpg" alt="Freely project cover with a surfer riding a wave" draggable="false" />
                 </button>
               </article>
-              <article class="coverflow-slide" role="listitem" aria-roledescription="slide" aria-label="2 of 5: SpaceY">
-                <img src="./assets/spacey.jpg" alt="SpaceY project cover showing planets and an asteroid field" draggable="false" />
-                <button class="project-open-button" type="button" data-open-report data-project-index="02" data-project-title="SpaceY" data-report-pages="66" data-report-src="./assets/spacey-report.pdf#view=FitH" aria-label="Open SpaceY project">
-                  <span>View project</span><span aria-hidden="true">↗</span>
+              <article class="coverflow-slide" role="listitem" aria-roledescription="slide" aria-label="2 of 5: SpaceY" data-open-report data-project-index="02" data-project-title="SpaceY" data-report-pages="66" data-report-src="./assets/spacey-report.pdf#view=FitH">
+                <button class="project-cover-button" type="button" aria-label="Open SpaceY project">
+                  <img src="./assets/spacey.jpg" alt="SpaceY project cover showing planets and an asteroid field" draggable="false" />
                 </button>
               </article>
-              <article class="coverflow-slide" role="listitem" aria-roledescription="slide" aria-label="3 of 5: Airbnb Pricing Model">
-                <img src="./assets/airbnb-pricing.jpg" alt="Airbnb Pricing Model project cover" draggable="false" />
-                <button class="project-open-button" type="button" data-open-report data-project-index="03" data-project-title="Airbnb Pricing Model" data-report-pages="63" data-report-src="./assets/airbnb-pricing-report.pdf#view=FitH" aria-label="Open Airbnb Pricing Model project">
-                  <span>View project</span><span aria-hidden="true">↗</span>
+              <article class="coverflow-slide" role="listitem" aria-roledescription="slide" aria-label="3 of 5: Airbnb Pricing Model" data-open-report data-project-index="03" data-project-title="Airbnb Pricing Model" data-report-pages="63" data-report-src="./assets/airbnb-pricing-report.pdf#view=FitH">
+                <button class="project-cover-button" type="button" aria-label="Open Airbnb Pricing Model project">
+                  <img src="./assets/airbnb-pricing.jpg" alt="Airbnb Pricing Model project cover" draggable="false" />
                 </button>
               </article>
-              <article class="coverflow-slide" role="listitem" aria-roledescription="slide" aria-label="4 of 5: Reverse Garbage">
-                <img src="./assets/reverse-garbage.jpg" alt="Reverse Garbage project cover" draggable="false" />
-                <button class="project-open-button" type="button" data-open-report data-project-index="04" data-project-title="Reverse Garbage" data-report-pages="27" data-report-src="./assets/reverse-garbage-final-report.pdf#view=FitH" aria-label="Open Reverse Garbage project">
-                  <span>View project</span><span aria-hidden="true">↗</span>
+              <article class="coverflow-slide" role="listitem" aria-roledescription="slide" aria-label="4 of 5: Reverse Garbage" data-open-report data-project-index="04" data-project-title="Reverse Garbage" data-report-pages="27" data-report-src="./assets/reverse-garbage-final-report.pdf#view=FitH">
+                <button class="project-cover-button" type="button" aria-label="Open Reverse Garbage project">
+                  <img src="./assets/reverse-garbage.jpg" alt="Reverse Garbage project cover" draggable="false" />
                 </button>
               </article>
-              <article class="coverflow-slide" role="listitem" aria-roledescription="slide" aria-label="5 of 5: FloodProtect Plus">
-                <img src="./assets/flood-protect.jpg" alt="FloodProtect Plus project cover showing a flooded town" draggable="false" />
-                <button class="project-open-button" type="button" data-open-report data-project-index="05" data-project-title="FloodProtect+" data-report-pages="12" data-report-src="./assets/floodprotect-plus-slides.pdf#view=FitH" aria-label="Open FloodProtect Plus project">
-                  <span>View project</span><span aria-hidden="true">↗</span>
+              <article class="coverflow-slide" role="listitem" aria-roledescription="slide" aria-label="5 of 5: FloodProtect Plus" data-open-report data-project-index="05" data-project-title="FloodProtect+" data-report-pages="12" data-report-src="./assets/floodprotect-plus-slides.pdf#view=FitH">
+                <button class="project-cover-button" type="button" aria-label="Open FloodProtect Plus project">
+                  <img src="./assets/flood-protect.jpg" alt="FloodProtect Plus project cover showing a flooded town" draggable="false" />
                 </button>
               </article>
             </div>
@@ -331,75 +326,214 @@
         </div>
       </section>
 
-      <dialog class="project-dialog" id="freelyProjectDialog" aria-labelledby="freelyProjectTitle">
-        <div class="project-dialog-shell">
+      <dialog class="project-dialog" id="freelyProjectDialog" aria-label="Freely project">
+        <div class="project-dialog-shell single-report-dialog-shell">
           <header class="project-dialog-header">
             <div>
               <p class="project-dialog-index">01 / Selected work</p>
-              <h2 id="freelyProjectTitle">Freely</h2>
             </div>
             <button class="project-dialog-close" type="button" data-close-project aria-label="Close Freely project" title="Close">×</button>
           </header>
 
-          <div class="project-dialog-controls">
-            <div class="project-view-tabs" role="tablist" aria-label="Freely project files">
-              <button id="freelyDashboardTab" class="project-view-tab is-active" type="button" role="tab" aria-selected="true" aria-controls="freelyDashboardPanel" data-project-tab="dashboard">Dashboard</button>
-              <button id="freelyReportTab" class="project-view-tab" type="button" role="tab" aria-selected="false" aria-controls="freelyReportPanel" data-project-tab="report" tabindex="-1">Final Report</button>
-            </div>
-          </div>
+          <section class="project-view-panel project-single-report-panel is-spacey-project freely-intro-panel" data-freely-intro-panel>
+            <article class="spacey-project-intro">
+              <figure class="spacey-project-cover">
+                <img src="./assets/freely-intro.png" alt="Freely surfer riding a wave project cover" />
+              </figure>
 
-          <section id="freelyDashboardPanel" class="project-view-panel" role="tabpanel" aria-labelledby="freelyDashboardTab" data-project-panel="dashboard">
-            <div class="project-view-toolbar">
-              <span>Interactive conversion-rate dashboard</span>
-              <a href="https://yuanzhuang.shinyapps.io/Freely_Conversion_Rate_Analysis_Dashboard/" target="_blank" rel="noopener noreferrer">Open dashboard ↗</a>
-            </div>
-            <div class="project-view-stage">
-              <div class="project-view-loading" aria-hidden="true">Loading dashboard…</div>
-              <iframe
-                class="project-viewer project-dashboard-viewer"
-                title="Freely interactive dashboard"
-                data-src="https://yuanzhuang.shinyapps.io/Freely_Conversion_Rate_Analysis_Dashboard/"
-                loading="lazy"
-              ></iframe>
-            </div>
-          </section>
+              <div class="spacey-task-intro blur-highlight" data-blur-highlight data-freely-intro>
+                <h2 class="spacey-intro-title"><span class="blur-piece">Freely Intro</span></h2>
+                <p class="spacey-challenge-line"><span class="blur-piece">Want to take on this challenge with me? Definitely!!!</span></p>
 
-          <section id="freelyReportPanel" class="project-view-panel" role="tabpanel" aria-labelledby="freelyReportTab" data-project-panel="report" hidden>
-            <div class="project-view-toolbar">
-              <span>Final report · 24 pages</span>
-              <a href="./assets/freely-final-report.pdf" target="_blank" rel="noopener">Open report ↗</a>
-            </div>
-            <div class="project-view-stage project-report-stage">
-              <div class="project-view-loading" aria-hidden="true">Loading report…</div>
-              <iframe
-                class="project-viewer project-report-viewer"
-                title="Freely final report"
-                data-src="./assets/freely-final-report.pdf#view=FitH"
-                loading="lazy"
-              ></iframe>
-            </div>
+                <p>
+                  <span class="blur-piece">This is your first time working as a <strong>leader in an external consulting team</strong> for a travel insurance company. You have to coordinate your team well and ensure that the whole workflow runs smoothly.</span>
+                </p>
+
+                <p>
+                  <span class="blur-piece">The travel insurance company <strong>Freely</strong> provided us with two months of quoting data, including whether each quote was eventually converted into a policy. The data they provided is a bit confusing and requires a <strong>heavy data-cleaning process</strong>.</span>
+                </p>
+
+                <p><span class="blur-piece">Your task now is to use this messy data to tell them:</span></p>
+
+                <ul class="spacey-business-lines" aria-label="Freely challenge question">
+                  <li><span class="blur-piece">Who are the <strong>valuable customers</strong> among those who requested a quote?</span></li>
+                </ul>
+
+                <p>
+                  <span class="blur-piece">Time to combine your data analytics, marketing analysis and leadership skills. Try your best!!!</span>
+                </p>
+
+                <p class="spacey-report-lead">
+                  <span class="blur-piece">After six intensive weeks, you have no energy left to do any more work, but your team finally received the recognition it deserved:</span>
+                  <span class="project-file-links">
+                    <a class="spacey-file-link" href="https://yuanzhuang.shinyapps.io/Freely_Conversion_Rate_Analysis_Dashboard/" target="_blank" rel="noopener noreferrer">Dashboard ↗</a>
+                    <a class="spacey-file-link" href="./assets/freely-final-report.pdf" target="_blank" rel="noopener">Final report ↗</a>
+                  </span>
+                </p>
+              </div>
+            </article>
           </section>
         </div>
       </dialog>
 
-      <dialog class="project-dialog" id="portfolioReportDialog" aria-labelledby="portfolioReportTitle">
+      <dialog class="project-dialog" id="portfolioReportDialog" aria-label="Portfolio project">
         <div class="project-dialog-shell single-report-dialog-shell">
           <header class="project-dialog-header">
             <div>
               <p class="project-dialog-index" data-report-index>02 / Selected work</p>
-              <h2 id="portfolioReportTitle" data-report-title>Project</h2>
             </div>
             <button class="project-dialog-close" type="button" data-close-report aria-label="Close project report" title="Close">×</button>
           </header>
 
-          <section class="project-view-panel project-single-report-panel">
+          <section class="project-view-panel project-single-report-panel" data-report-panel>
+            <article class="spacey-project-intro" data-spacey-intro data-project-intro="SpaceY" hidden>
+              <figure class="spacey-project-cover">
+                <img src="./assets/spacey.jpg" alt="SpaceY project cover showing planets and an asteroid field" />
+              </figure>
+
+              <div class="spacey-task-intro blur-highlight" data-blur-highlight>
+                <h2 class="spacey-intro-title"><span class="blur-piece">SpaceY Intro</span></h2>
+                <p class="spacey-challenge-line"><span class="blur-piece">Want to take on this challenge with me? Come on!!!</span></p>
+
+                <p>
+                  <span class="blur-piece">Imagine you are the <strong>Head Actuary in the year 2100</strong>, responsible for making an important business decision for your company.</span>
+                </p>
+
+                <p>
+                  <span class="blur-piece">Your company is considering whether to provide insurance for a <strong>space mining company entering a new market</strong>, covering four business lines:</span>
+                </p>
+
+                <ul class="spacey-business-lines" aria-label="Four business lines">
+                  <li><span class="blur-piece">Workers’ Compensation</span></li>
+                  <li><span class="blur-piece">Business Interruption</span></li>
+                  <li><span class="blur-piece">Cargo Loss</span></li>
+                  <li><span class="blur-piece">Equipment Failure</span></li>
+                </ul>
+
+                <p>
+                  <span class="blur-piece">Luckily, we have <strong>historical claims and loss data across these four business lines from three explored planets</strong>, as well as <strong>planet-level environmental data for the new target planet</strong>.</span>
+                </p>
+
+                <ul class="spacey-business-lines spacey-decision-question" aria-label="SpaceY decision question">
+                  <li><span class="blur-piece">What can we do to make a better decision?</span></li>
+                </ul>
+
+                <p class="spacey-report-lead">
+                  <span class="blur-piece">After three intensive weeks, we reached the final decision, presented in the report below:</span>
+                  <a class="spacey-file-link" href="./assets/spacey-report.pdf" target="_blank" rel="noopener">SpaceY final report ↗</a>
+                </p>
+              </div>
+            </article>
+
+            <article class="spacey-project-intro" data-project-intro="Reverse Garbage" hidden>
+              <figure class="spacey-project-cover">
+                <img src="./assets/reverse-garbage-intro.png" alt="Reverse Garbage colourful building mural project cover" />
+              </figure>
+
+              <div class="spacey-task-intro blur-highlight" data-blur-highlight>
+                <h2 class="spacey-intro-title"><span class="blur-piece">Reverse Garbage Intro</span></h2>
+                <p class="spacey-challenge-line"><span class="blur-piece">Want to take on this challenge with me? Let's go!!!</span></p>
+
+                <p>
+                  <span class="blur-piece">This time, you are <strong>not an actuary</strong>. You are working in a consulting team that provides free support to <strong>social enterprises</strong>, because you want to devote some effort to encouraging environmentally friendly organisations.</span>
+                </p>
+
+                <p>
+                  <span class="blur-piece">You are so lucky to work with this team because all of you share the same value: <strong>trying your best to help</strong>. The problem faced by the social enterprise, <strong>Reverse Garbage</strong>, is that they are wondering why their workshops are not working well for <strong>company team-building activities</strong>.</span>
+                </p>
+
+                <p>
+                  <span class="blur-piece">You are given full freedom to explore the problem and tell them why, since they also operate as a <strong>non-profit organisation</strong> and have limited time to focus on the business side.</span>
+                </p>
+
+                <p>
+                  <span class="blur-piece">Your team attended two meetings with the CEO, experienced their workshop in person, designed a complete survey for participating organisations, and finally provided suggestions through a complete <strong>marketing research process</strong>.</span>
+                </p>
+
+                <p class="spacey-report-lead">
+                  <span class="blur-piece">After four weeks of collaboration, our team finally delivered a complete analysis and set of recommendations. <strong>RG was very impressed and inspired by our work:</strong></span>
+                  <a class="spacey-file-link" href="./assets/reverse-garbage-final-report.pdf" target="_blank" rel="noopener">Reverse Garbage final report ↗</a>
+                </p>
+              </div>
+            </article>
+
+            <article class="spacey-project-intro" data-project-intro="Airbnb Pricing Model" hidden>
+              <figure class="spacey-project-cover">
+                <img src="./assets/airbnb-intro.png" alt="Airbnb Pricing Model Melbourne property cover" />
+              </figure>
+
+              <div class="spacey-task-intro blur-highlight" data-blur-highlight>
+                <h2 class="spacey-intro-title"><span class="blur-piece">Airbnb Pricing Model Intro</span></h2>
+                <p class="spacey-challenge-line"><span class="blur-piece">Want to take on this challenge with me? Why not!!!</span></p>
+
+                <p>
+                  <span class="blur-piece">This time, you are planning to become an <strong>Airbnb investor in Melbourne</strong>. But before putting your money into a property, you want to know more than just: <em>“Is this a good location?”</em></span>
+                </p>
+
+                <p>
+                  <span class="blur-piece">Luckily, you have nearly <strong>9,000 Airbnb listings</strong> in front of you, containing information about price, location, room type, host behaviour, reviews, and many other features.</span>
+                </p>
+
+                <p>
+                  <span class="blur-piece">Now it is time to use your <strong>data analytics and machine learning skills</strong> to tell yourself:</span>
+                </p>
+
+                <ul class="spacey-business-lines" aria-label="Airbnb Pricing Model challenge questions">
+                  <li><span class="blur-piece">What makes an Airbnb listing more likely to achieve a <strong>high customer rating</strong>?</span></li>
+                  <li><span class="blur-piece">As an investor, what kind of property and hosting strategy should you choose?</span></li>
+                  <li><span class="blur-piece">Most importantly, <strong>how much should the property actually be priced at?</strong></span></li>
+                </ul>
+
+                <p class="spacey-report-lead">
+                  <span class="blur-piece">After testing different statistical and machine learning models, you finally found your answers:</span>
+                  <a class="spacey-file-link" href="./assets/airbnb-pricing-report.pdf" target="_blank" rel="noopener">Final report ↗</a>
+                </p>
+              </div>
+            </article>
+
+            <article class="spacey-project-intro" data-project-intro="FloodProtect+" hidden>
+              <figure class="spacey-project-cover">
+                <img src="./assets/flood-protect.jpg" alt="FloodProtect Plus project cover showing a flooded town" />
+              </figure>
+
+              <div class="spacey-task-intro blur-highlight" data-blur-highlight>
+                <h2 class="spacey-intro-title"><span class="blur-piece">FloodProtect Intro</span></h2>
+                <p class="spacey-challenge-line"><span class="blur-piece">Want to take on this challenge with me? Of course!!!</span></p>
+
+                <p>
+                  <span class="blur-piece">You are now working in an <strong>actuarial innovation team</strong> with several talented partners. All of you are full of innovation and ambition to create value for your own company. Regularly launching valuable new products by <strong>identifying unmet needs</strong> is how your company builds its core competitiveness in the market.</span>
+                </p>
+
+                <p>
+                  <span class="blur-piece">As usual, the four of you try your best to fight for the chance to have your innovative proposal selected. This time, your talented partner has identified an urgent problem — <strong>flood insurance is becoming increasingly unaffordable under climate change.</strong> Your team all agree to take on this problem-solving task.</span>
+                </p>
+
+                <p>
+                  <span class="blur-piece">Now, you have to work together with your team to <strong>persuade the other actuarial teams</strong> to agree with your proposal.</span>
+                </p>
+
+                <p><span class="blur-piece">Tell them:</span></p>
+
+                <ul class="spacey-business-lines" aria-label="FloodProtect challenge questions">
+                  <li><span class="blur-piece">What problem are you trying to solve, and why does it matter?</span></li>
+                  <li><span class="blur-piece">How can you solve a problem that has challenged the Australian insurance market for years?</span></li>
+                  <li><span class="blur-piece">Why is it practical and implementable?</span></li>
+                </ul>
+
+                <p class="spacey-report-lead">
+                  <span class="blur-piece">After five weeks of in-depth research, the four of you delivered a persuasive presentation:</span>
+                  <a class="spacey-file-link" href="./assets/floodprotect-plus-slides.pdf" target="_blank" rel="noopener">FloodProtect presentation ↗</a>
+                </p>
+              </div>
+            </article>
+
             <div class="project-view-toolbar">
               <span data-report-meta>Project report</span>
               <a data-report-link href="#" target="_blank" rel="noopener">Open report ↗</a>
             </div>
             <div class="project-view-stage project-report-stage">
               <div class="project-view-loading" aria-hidden="true">Loading report…</div>
-              <iframe class="project-viewer" title="Portfolio project report" data-report-viewer></iframe>
+              <iframe class="project-viewer" title="Portfolio project report" data-report-viewer loading="lazy"></iframe>
             </div>
           </section>
         </div>
@@ -407,18 +541,15 @@
 
       <section id="beyond-work" class="internship-section">
         <p>Sincerely seeking opportunities in insurance, particularly within underwriting or product teams. I’m ready to learn, contribute, and do my best to create meaningful value through my work!!!</p>
-        <a class="resume-button" href="#">Download Resume</a>
+        <a class="resume-button" href="./assets/yuan-zhang-cv.pdf" download="Yuan-Zhang-CV.pdf">Download Resume</a>
         <nav class="contact-links" aria-label="Contact Dollar Zhang">
-          <a class="contact-link" href="#" data-contact-missing data-label="Email · link pending" aria-label="Email link pending" title="Email">
+          <a class="contact-link" href="mailto:dollaroo099@gmail.com" data-label="Email Dollar Zhang" aria-label="Email Dollar Zhang at dollaroo099@gmail.com" title="Email">
             <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="m4 7 8 6 8-6"></path></svg>
           </a>
-          <a class="contact-link" href="#" data-contact-missing data-label="LinkedIn · link pending" aria-label="LinkedIn link pending" title="LinkedIn">
+          <a class="contact-link" href="https://www.linkedin.com/in/dollar-zhang-2208b1335/" target="_blank" rel="noopener noreferrer" data-label="View Dollar on LinkedIn" aria-label="View Dollar Zhang on LinkedIn" title="LinkedIn">
             <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3"></rect><path d="M8 10v7M8 7v.01M12 17v-4a3 3 0 0 1 6 0v4M12 10v7"></path></svg>
           </a>
-          <a class="contact-link" href="#" data-contact-missing data-label="WeChat · link pending" aria-label="WeChat link pending" title="WeChat">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 7.5c0 3-2.8 5.5-6.2 5.5-1 0-1.9-.2-2.7-.6L3 13.7l.8-2.4A5 5 0 0 1 2 7.5C2 4.5 4.8 2 8.3 2s6.2 2.5 6.2 5.5Z"></path><path d="M10 13c0 2.5 2.5 4.5 5.5 4.5.8 0 1.6-.1 2.3-.4L21 19l-.9-2.7a4 4 0 0 0 .9-2.5c0-2.5-2.5-4.5-5.5-4.5-.5 0-1 .1-1.5.2"></path><path d="M6 6.5h.01M10.5 6.5h.01M14 13h.01M18 13h.01"></path></svg>
-          </a>
-          <a class="contact-link" href="#" data-contact-missing data-label="WhatsApp · link pending" aria-label="WhatsApp link pending" title="WhatsApp">
+          <a class="contact-link" href="https://wa.me/61402509083?text=Hi%20Dollar%2C%20I%20found%20your%20portfolio%20and%20would%20love%20to%20connect." target="_blank" rel="noopener noreferrer" data-label="Message Dollar on WhatsApp" aria-label="Message Dollar Zhang on WhatsApp" title="WhatsApp">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11.5a8 8 0 0 1-11.8 7L4 20l1.5-4.1A8 8 0 1 1 20 11.5Z"></path><path d="M9 8.5c.4 2.8 2 4.4 4.8 5.2l1.2-1.1 2 .9c-.2 1.4-1.3 2.3-2.7 2.2-4.1-.3-7.4-3.5-7.8-7.6C6.4 6.8 7.3 5.7 8.7 5.5l.9 2-1.1 1Z"></path></svg>
           </a>
         </nav>
@@ -426,6 +557,6 @@
     </main>
     <script src="./assets/hero-character-data.js"></script>
     <script src="./assets/three.min.js"></script>
-    <script src="./script.js"></script>
+    <script src="./script.js?v=20260826-10"></script>
   </body>
 </html>

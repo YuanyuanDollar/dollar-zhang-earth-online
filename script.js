@@ -30,14 +30,18 @@ const projectViewTabs = [...document.querySelectorAll("[data-project-tab]")];
 const projectViewPanels = [...document.querySelectorAll("[data-project-panel]")];
 const projectViewers = [...document.querySelectorAll(".project-viewer")];
 const portfolioReportDialog = document.querySelector("#portfolioReportDialog");
-const portfolioReportTriggers = [...document.querySelectorAll("[data-open-report]")];
 const portfolioReportClose = document.querySelector("[data-close-report]");
-const portfolioReportTitle = document.querySelector("[data-report-title]");
 const portfolioReportIndex = document.querySelector("[data-report-index]");
 const portfolioReportMeta = document.querySelector("[data-report-meta]");
 const portfolioReportLink = document.querySelector("[data-report-link]");
 const portfolioReportViewer = document.querySelector("[data-report-viewer]");
+const portfolioReportPanel = document.querySelector("[data-report-panel]");
+const spaceYProjectIntro = document.querySelector("[data-spacey-intro]");
+const projectIntroPages = [...document.querySelectorAll("[data-project-intro]")];
+const freelyIntroPanel = document.querySelector("[data-freely-intro-panel]");
+const freelyIntroBlock = document.querySelector("[data-freely-intro]");
 let activePortfolioReportTrigger = null;
+let spaceYReportRestoreTop = null;
 
 const initOnlineGlobe = () => {
   if (!onlineGlobe || !window.THREE) return;
@@ -193,26 +197,108 @@ const activateProjectPanel = (name) => {
 
 projectViewers.forEach((viewer) => {
   viewer.addEventListener("load", () => {
+    if (viewer.dataset.pendingSrc) return;
     viewer.closest(".project-view-stage")?.classList.add("is-loaded");
+    if (
+      viewer === portfolioReportViewer
+      && portfolioReportPanel?.classList.contains("is-spacey-project")
+      && spaceYReportRestoreTop !== null
+    ) {
+      const restoreTop = spaceYReportRestoreTop;
+      const restoreScroll = () => {
+        if (portfolioReportDialog?.open && portfolioReportPanel) portfolioReportPanel.scrollTop = restoreTop;
+      };
+      requestAnimationFrame(restoreScroll);
+      window.setTimeout(restoreScroll, 120);
+      window.setTimeout(() => {
+        restoreScroll();
+        spaceYReportRestoreTop = null;
+      }, 500);
+    }
   });
 });
 
-if (freelyProjectDialog && freelyProjectTrigger) {
-  freelyProjectTrigger.addEventListener("pointerdown", (event) => event.stopPropagation());
-  freelyProjectTrigger.addEventListener("click", (event) => {
-    event.stopPropagation();
-    activateProjectPanel("dashboard");
-    freelyProjectDialog.showModal();
-    document.body.classList.add("project-dialog-open");
-  });
+const loadPendingSpaceYReport = () => {
+  if (!portfolioReportPanel || !portfolioReportViewer || !spaceYProjectIntro) return;
+  const pendingSrc = portfolioReportViewer.dataset.pendingSrc;
+  if (!pendingSrc || !portfolioReportPanel.classList.contains("is-spacey-project")) return;
+  const loadThreshold = spaceYProjectIntro.offsetHeight - 160;
+  if (portfolioReportPanel.scrollTop + portfolioReportPanel.clientHeight < loadThreshold) return;
 
+  spaceYReportRestoreTop = portfolioReportPanel.scrollTop;
+  delete portfolioReportViewer.dataset.pendingSrc;
+  portfolioReportViewer.src = pendingSrc;
+};
+
+portfolioReportPanel?.addEventListener("scroll", loadPendingSpaceYReport, { passive: true });
+
+const openFreelyProject = () => {
+  if (!freelyProjectDialog) return;
+  if (freelyIntroPanel) freelyIntroPanel.scrollTop = 0;
+  freelyIntroBlock?.classList.remove("is-visible");
+  freelyProjectDialog.showModal();
+  document.body.classList.add("project-dialog-open");
+  requestAnimationFrame(() => {
+    if (freelyIntroPanel) freelyIntroPanel.scrollTop = 0;
+    requestAnimationFrame(() => freelyIntroBlock?.classList.add("is-visible"));
+  });
+};
+
+const openPortfolioReport = (trigger) => {
+  if (!portfolioReportDialog || !portfolioReportViewer || !trigger) return;
+  const { projectIndex, projectTitle, reportPages, reportSrc } = trigger.dataset;
+  const reportUrl = reportSrc.split("#")[0];
+  const introPage = projectIntroPages.find((page) => page.dataset.projectIntro === projectTitle);
+  const hasProjectIntro = Boolean(introPage);
+  activePortfolioReportTrigger = trigger;
+  portfolioReportPanel?.classList.toggle("is-spacey-project", hasProjectIntro);
+  projectIntroPages.forEach((page) => {
+    page.hidden = page !== introPage;
+  });
+  if (portfolioReportPanel) portfolioReportPanel.scrollTop = 0;
+  portfolioReportDialog.setAttribute("aria-label", `${projectTitle} project`);
+  portfolioReportIndex.textContent = `${projectIndex} / Selected work`;
+  portfolioReportMeta.textContent = `${projectTitle} · ${reportPages} pages`;
+  portfolioReportLink.href = reportUrl;
+  portfolioReportLink.setAttribute("aria-label", `Open ${projectTitle} report in a new tab`);
+  portfolioReportViewer.title = `${projectTitle} report`;
+  portfolioReportViewer.closest(".project-view-stage")?.classList.remove("is-loaded");
+  if (hasProjectIntro) {
+    delete portfolioReportViewer.dataset.pendingSrc;
+    portfolioReportViewer.removeAttribute("src");
+  } else {
+    delete portfolioReportViewer.dataset.pendingSrc;
+    portfolioReportViewer.src = reportSrc;
+  }
+  portfolioReportDialog.showModal();
+  document.body.classList.add("project-dialog-open");
+
+  requestAnimationFrame(() => {
+    if (portfolioReportPanel) portfolioReportPanel.scrollTop = 0;
+  });
+  if (hasProjectIntro) {
+    window.setTimeout(() => {
+      if (portfolioReportDialog.open && activePortfolioReportTrigger === trigger && portfolioReportPanel) {
+        portfolioReportPanel.scrollTop = 0;
+      }
+    }, 500);
+  }
+
+  if (introPage) {
+    const highlightBlock = introPage.querySelector("[data-blur-highlight]");
+    highlightBlock?.classList.remove("is-visible");
+    requestAnimationFrame(() => requestAnimationFrame(() => highlightBlock?.classList.add("is-visible")));
+  }
+};
+
+if (freelyProjectDialog && freelyProjectTrigger) {
   freelyProjectClose?.addEventListener("click", () => freelyProjectDialog.close());
   freelyProjectDialog.addEventListener("click", (event) => {
     if (event.target === freelyProjectDialog) freelyProjectDialog.close();
   });
   freelyProjectDialog.addEventListener("close", () => {
     document.body.classList.remove("project-dialog-open");
-    freelyProjectTrigger.focus({ preventScroll: true });
+    freelyProjectTrigger.querySelector(".project-cover-button")?.focus({ preventScroll: true });
   });
 
   projectViewTabs.forEach((tab, index) => {
@@ -229,33 +315,13 @@ if (freelyProjectDialog && freelyProjectTrigger) {
 }
 
 if (portfolioReportDialog && portfolioReportViewer) {
-  portfolioReportTriggers.forEach((trigger) => {
-    trigger.addEventListener("pointerdown", (event) => event.stopPropagation());
-    trigger.addEventListener("click", (event) => {
-      event.stopPropagation();
-      const { projectIndex, projectTitle, reportPages, reportSrc } = trigger.dataset;
-      const reportUrl = reportSrc.split("#")[0];
-      activePortfolioReportTrigger = trigger;
-      portfolioReportTitle.textContent = projectTitle;
-      portfolioReportIndex.textContent = `${projectIndex} / Selected work`;
-      portfolioReportMeta.textContent = `${projectTitle} · ${reportPages} pages`;
-      portfolioReportLink.href = reportUrl;
-      portfolioReportLink.setAttribute("aria-label", `Open ${projectTitle} report in a new tab`);
-      portfolioReportViewer.title = `${projectTitle} report`;
-      portfolioReportViewer.closest(".project-view-stage")?.classList.remove("is-loaded");
-      portfolioReportViewer.src = reportSrc;
-      portfolioReportDialog.showModal();
-      document.body.classList.add("project-dialog-open");
-    });
-  });
-
   portfolioReportClose?.addEventListener("click", () => portfolioReportDialog.close());
   portfolioReportDialog.addEventListener("click", (event) => {
     if (event.target === portfolioReportDialog) portfolioReportDialog.close();
   });
   portfolioReportDialog.addEventListener("close", () => {
     document.body.classList.remove("project-dialog-open");
-    activePortfolioReportTrigger?.focus({ preventScroll: true });
+    activePortfolioReportTrigger?.querySelector(".project-cover-button")?.focus({ preventScroll: true });
   });
 }
 
@@ -914,6 +980,13 @@ if (coverflowCarousel) {
 
   const indexAt = (value) => ((Math.round(value) % count) + count) % count;
 
+  const slideAtPoint = (x, y) => slides
+    .filter((slide) => {
+      const rect = slide.getBoundingClientRect();
+      return x >= rect.left && x <= rect.right && y >= rect.top && y <= rect.bottom;
+    })
+    .sort((a, b) => Number(b.style.zIndex || 0) - Number(a.style.zIndex || 0))[0] || null;
+
   const paintCoverflow = () => {
     if (!cardWidth || !count) return;
     const pitch = cardWidth * (1 + gap);
@@ -934,8 +1007,11 @@ if (coverflowCarousel) {
         + `translateZ(${-depth * cardWidth * ramp}px) rotateY(${-tilt}deg)`;
       slide.style.opacity = opacity.toFixed(3);
       slide.style.zIndex = String(100 - Math.round(distance * 10));
-      slide.classList.toggle("is-selected", index === indexAt(position));
-      slide.setAttribute("aria-current", index === indexAt(position) ? "true" : "false");
+      const isSelected = index === indexAt(position);
+      slide.classList.toggle("is-selected", isSelected);
+      slide.setAttribute("aria-current", isSelected ? "true" : "false");
+      const coverButton = slide.querySelector(".project-cover-button");
+      if (coverButton) coverButton.tabIndex = isSelected ? 0 : -1;
     });
   };
 
@@ -994,7 +1070,8 @@ if (coverflowCarousel) {
       position,
       velocity: 0,
       time: performance.now(),
-      moved: false
+      moved: false,
+      slide: event.target.closest?.(".coverflow-slide") || slideAtPoint(event.clientX, event.clientY)
     };
   });
 
@@ -1013,10 +1090,19 @@ if (coverflowCarousel) {
 
   const endCoverflowDrag = (event) => {
     if (!drag || drag.id !== event.pointerId) return;
-    suppressClick = drag.moved;
+    const wasMoved = drag.moved;
+    const pressedSlide = drag.slide;
+    const clickedSlide = !wasMoved ? pressedSlide : null;
+    suppressClick = wasMoved || Boolean(clickedSlide);
     const carried = Math.max(-2, Math.min(2, drag.velocity * 0.18));
     drag = null;
     settleCoverflow(Math.round(position + carried));
+
+    if (clickedSlide?.matches("[data-open-freely]")) {
+      openFreelyProject();
+    } else if (clickedSlide?.matches("[data-open-report]")) {
+      openPortfolioReport(clickedSlide);
+    }
   };
 
   frame?.addEventListener("pointerup", endCoverflowDrag);
@@ -1059,14 +1145,29 @@ if (coverflowCarousel) {
     }
   });
 
-  slides.forEach((slide, index) => {
-    slide.addEventListener("click", () => {
-      if (suppressClick) {
-        suppressClick = false;
-        return;
-      }
-      goToCoverflow(index);
-    });
+  frame?.addEventListener("click", (event) => {
+    if (suppressClick) {
+      suppressClick = false;
+      return;
+    }
+
+    let slide = event.target.closest?.(".coverflow-slide");
+    if (!slide && Number.isFinite(event.clientX) && Number.isFinite(event.clientY)) {
+      slide = slideAtPoint(event.clientX, event.clientY);
+    }
+    if (!slide) return;
+
+    if (slide.matches("[data-open-freely]")) {
+      openFreelyProject();
+      return;
+    }
+    if (slide.matches("[data-open-report]")) {
+      openPortfolioReport(slide);
+      return;
+    }
+
+    const index = slides.indexOf(slide);
+    if (index >= 0) goToCoverflow(index);
   });
 
   if ("ResizeObserver" in window && frame) {
