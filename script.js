@@ -1,3 +1,11 @@
+if ("scrollRestoration" in history) {
+  history.scrollRestoration = "manual";
+}
+
+window.addEventListener("pageshow", () => {
+  if (!window.location.hash) window.scrollTo(0, 0);
+});
+
 const badge = document.querySelector("#draggableBadge");
 const lanyardRig = document.querySelector(".lanyard-rig");
 const leftLanyardPath = document.querySelector("#leftLanyardPath");
