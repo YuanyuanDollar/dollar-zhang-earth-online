@@ -29,7 +29,9 @@
 
   position: relative;
   width: 100%;
-  margin: 0 0 clamp(34px, 5vw, 68px);
+  /* generous breathing room so the machine gets the viewport to itself —
+     the "seeking opportunities" copy below stays off-screen while you play */
+  margin: 0 0 clamp(150px, 28vh, 320px);
   text-align: left;
   color: var(--deep);
 }
