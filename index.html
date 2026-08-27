@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Dollar Zhang 🌏 online</title>
     <link rel="stylesheet" href="./styles.css" />
+    <link rel="stylesheet" href="./gashapon.css" />
   </head>
   <body>
     <canvas class="smooth-cursor-canvas" aria-hidden="true"></canvas>
@@ -540,6 +541,94 @@
       </dialog>
 
       <section id="beyond-work" class="internship-section">
+        <div class="gasha" data-gashapon data-state="idle">
+          <div class="gasha-inner">
+            <div class="gasha-stage-wrap">
+              <div class="gasha-stage" data-gasha-stage>
+                <img class="gasha-machine" src="./assets/gashapon-machine.webp" width="1086" height="1448" alt="A hand-painted capsule-toy machine filled with coloured capsules" draggable="false" />
+                <img class="gasha-machine-inner" src="./assets/gashapon-capsules-inner.webp" alt="" aria-hidden="true" draggable="false" />
+                <img class="gasha-knob" src="./assets/gashapon-knob.webp" alt="" aria-hidden="true" draggable="false" data-gasha-knob />
+                <span class="gasha-ping gasha-ping-slot" aria-hidden="true"></span>
+                <span class="gasha-ping gasha-ping-knob" aria-hidden="true"></span>
+                <span class="gasha-ping gasha-ping-tray" aria-hidden="true"></span>
+                <button class="gasha-hot gasha-hot-knob" type="button" data-gasha-handle aria-label="Turn the gashapon handle" disabled></button>
+                <span class="gasha-hint gasha-hint-turn" data-gasha-hint="turn" aria-hidden="true">Turn me &#8594;</span>
+                <span class="gasha-hint gasha-hint-open" data-gasha-hint="open" aria-hidden="true">Open it!</span>
+              </div>
+            </div>
+
+            <div class="gasha-panel">
+              <p class="gasha-kicker">Beyond the reports&#8230;</p>
+              <h2 class="gasha-title">One dollar, one small story about me.</h2>
+              <p class="gasha-lede">Six kinds of capsule, none of them on my CV. Drop in the coin, turn the handle, and see what falls out.</p>
+              <p class="gasha-status" data-gasha-status role="status" aria-live="polite">Ready &#8212; drop in your dollar.</p>
+
+              <div class="gasha-swap">
+                <ul class="gasha-legend" data-gasha-legend>
+              <li data-category="Hobbies">
+                <img src="./assets/capsule-pink.webp" alt="" aria-hidden="true" />
+                <div><b>Hobbies</b><span>Things I love and enjoy.</span></div>
+              </li>
+              <li data-category="Embarrassing Stories">
+                <img src="./assets/capsule-orange.webp" alt="" aria-hidden="true" />
+                <div><b>Embarrassing Stories</b><span>Awkward but funny moments.</span></div>
+              </li>
+              <li data-category="MBTI">
+                <img src="./assets/capsule-yellow.webp" alt="" aria-hidden="true" />
+                <div><b>MBTI</b><span>My personality type and how I think.</span></div>
+              </li>
+              <li data-category="Strengths Test">
+                <img src="./assets/capsule-green.webp" alt="" aria-hidden="true" />
+                <div><b>Strengths Test</b><span>My CliftonStrengths.</span></div>
+              </li>
+              <li data-category="Failures">
+                <img src="./assets/capsule-cyan.webp" alt="" aria-hidden="true" />
+                <div><b>Failures</b><span>Things I failed at and learned from.</span></div>
+              </li>
+              <li data-category="Values Ranking">
+                <img src="./assets/capsule-blue.webp" alt="" aria-hidden="true" />
+                <div><b>Values Ranking</b><span>What matters most to me.</span></div>
+              </li>
+                </ul>
+                <div class="gasha-reveal" data-gasha-reveal hidden></div>
+                <ul class="gasha-collection" data-gasha-collection hidden></ul>
+              </div>
+
+              <div class="gasha-foot">
+                <p class="gasha-progress" data-gasha-progress>0 stories discovered</p>
+                <button class="gasha-btn gasha-btn-primary" type="button" data-gasha-again hidden>Try again</button>
+                <button class="gasha-btn" type="button" data-gasha-collection-toggle aria-expanded="false">View collection</button>
+                <button class="gasha-sound" type="button" data-gasha-sound aria-pressed="true" aria-label="Turn machine sound off" title="Machine sound">
+                  <svg class="gasha-sound-on" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4Z"></path><path d="M16.5 8.6a4.8 4.8 0 0 1 0 6.8"></path><path d="M19.2 5.9a8.6 8.6 0 0 1 0 12.2"></path></svg>
+                  <svg class="gasha-sound-off" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4Z"></path><path d="m17 9.5 5 5"></path><path d="m22 9.5-5 5"></path></svg>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <button class="gasha-coin" type="button" data-gasha-coin aria-label="Insert one dollar to start">
+            <span class="gasha-coin-face" aria-hidden="true"></span>
+            <span class="gasha-spark gasha-spark-1" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0c.8 6.6 4.6 10.4 12 12-7.4 1.6-11.2 5.4-12 12-.8-6.6-4.6-10.4-12-12C7.4 10.4 11.2 6.6 12 0Z"></path></svg></span>
+            <span class="gasha-spark gasha-spark-2" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0c.8 6.6 4.6 10.4 12 12-7.4 1.6-11.2 5.4-12 12-.8-6.6-4.6-10.4-12-12C7.4 10.4 11.2 6.6 12 0Z"></path></svg></span>
+            <span class="gasha-spark gasha-spark-3" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0c.8 6.6 4.6 10.4 12 12-7.4 1.6-11.2 5.4-12 12-.8-6.6-4.6-10.4-12-12C7.4 10.4 11.2 6.6 12 0Z"></path></svg></span>
+            <span class="gasha-coin-hint" aria-hidden="true">Start with $1</span>
+          </button>
+
+          <button class="gasha-capsule" type="button" data-gasha-capsule aria-label="Open the capsule" disabled>
+            <span class="gasha-cap-half is-top" aria-hidden="true"></span>
+            <span class="gasha-cap-half is-bottom" aria-hidden="true"></span>
+          </button>
+
+          <div class="gasha-burst" data-gasha-burst aria-hidden="true">
+            <span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0c.8 6.6 4.6 10.4 12 12-7.4 1.6-11.2 5.4-12 12-.8-6.6-4.6-10.4-12-12C7.4 10.4 11.2 6.6 12 0Z"></path></svg></span>
+            <span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0c.8 6.6 4.6 10.4 12 12-7.4 1.6-11.2 5.4-12 12-.8-6.6-4.6-10.4-12-12C7.4 10.4 11.2 6.6 12 0Z"></path></svg></span>
+            <span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0c.8 6.6 4.6 10.4 12 12-7.4 1.6-11.2 5.4-12 12-.8-6.6-4.6-10.4-12-12C7.4 10.4 11.2 6.6 12 0Z"></path></svg></span>
+            <span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0c.8 6.6 4.6 10.4 12 12-7.4 1.6-11.2 5.4-12 12-.8-6.6-4.6-10.4-12-12C7.4 10.4 11.2 6.6 12 0Z"></path></svg></span>
+            <span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0c.8 6.6 4.6 10.4 12 12-7.4 1.6-11.2 5.4-12 12-.8-6.6-4.6-10.4-12-12C7.4 10.4 11.2 6.6 12 0Z"></path></svg></span>
+            <span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0c.8 6.6 4.6 10.4 12 12-7.4 1.6-11.2 5.4-12 12-.8-6.6-4.6-10.4-12-12C7.4 10.4 11.2 6.6 12 0Z"></path></svg></span>
+          </div>
+        </div>
+
         <p>Sincerely seeking opportunities in insurance, particularly within underwriting or product teams. I’m ready to learn, contribute, and do my best to create meaningful value through my work!!!</p>
         <a class="resume-button" href="./assets/yuan-zhang-cv.pdf" download="Yuan-Zhang-CV.pdf">Download Resume</a>
         <nav class="contact-links" aria-label="Contact Dollar Zhang">
@@ -557,6 +646,8 @@
     </main>
     <script src="./assets/hero-character-data.js"></script>
     <script src="./assets/three.min.js"></script>
-    <script src="./script.js?v=20260827-4"></script>
+    <script src="./script.js?v=20260827-5"></script>
+    <script src="./capsule-stories.js?v=20260827-5"></script>
+    <script src="./gashapon.js?v=20260827-5"></script>
   </body>
 </html>

@@ -368,6 +368,8 @@ const playBubbleSound = () => {
 };
 
 document.addEventListener("click", (event) => {
+  // the gashapon module has its own sound design — keep the page bubble out of it
+  if (event.target.closest(".gasha")) return;
   if (event.target.closest("a, button, [role='button'], .coverflow-slide")) playBubbleSound();
 });
 

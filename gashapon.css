@@ -1,0 +1,967 @@
+/* =============================================================================
+   gashapon.css — interactive capsule-toy module inside the "Beyond Work" section
+   Scoped entirely to .gasha* so it cannot leak into the rest of the site.
+   ========================================================================== */
+
+.gasha {
+  --gasha-hand: Caveat, "Bradley Hand", "Segoe Print", cursive;
+
+  --cap-pink: #d98d99;
+  --cap-orange: #eda66c;
+  --cap-yellow: #e9c476;
+  --cap-green: #bcc36a;
+  --cap-cyan: #9dbdb4;
+  --cap-blue: #87a2cf;
+
+  --cap-pink-ink: #86575e;
+  --cap-orange-ink: #926642;
+  --cap-yellow-ink: #8a7444;
+  --cap-green-ink: #6f7440;
+  --cap-cyan-ink: #5d716b;
+  --cap-blue-ink: #536480;
+
+  --gasha-card-paper: #faf7f1;
+
+  /* geometry — recalculated by gashapon.js on load + resize */
+  --gs-cap: 52px;
+  --gs-coin: 56px;
+  --cap-img: url("./assets/capsule-blue.webp");
+
+  position: relative;
+  width: 100%;
+  margin: 0 0 clamp(34px, 5vw, 68px);
+  text-align: left;
+  color: var(--deep);
+}
+
+.gasha *,
+.gasha *::before,
+.gasha *::after {
+  box-sizing: border-box;
+}
+
+/* the surrounding .internship-section centres and widens every <p> — undo that
+   inside the module only */
+.gasha p {
+  width: auto;
+  max-width: none;
+  margin: 0;
+  text-align: left;
+}
+
+.gasha-inner {
+  display: grid;
+  grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+  gap: clamp(20px, 4vw, 62px);
+  align-items: center;
+}
+
+/* -------------------------------------------------------------- the machine */
+
+.gasha-stage-wrap {
+  position: relative;
+  padding: 0 clamp(46px, 13%, 88px) 46px 0;
+}
+
+.gasha-stage {
+  position: relative;
+  width: min(400px, 100%);
+  margin: 0 0 0 auto;
+  aspect-ratio: 1086 / 1448;
+  transform-origin: 50% 88%;
+}
+
+.gasha-machine,
+.gasha-machine-inner,
+.gasha-knob {
+  display: block;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.gasha-machine {
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(0 18px 26px rgba(18, 44, 79, 0.13));
+}
+
+/* the stack of capsules visible through the glass — jiggles when the handle turns */
+.gasha-machine-inner {
+  position: absolute;
+  left: 27.44%;
+  top: 11.05%;
+  width: 16.02%;
+  pointer-events: none;
+  transform: translate3d(0, 0, 0);
+}
+
+/* the dial, cut out of the artwork so it can actually rotate */
+.gasha-knob {
+  position: absolute;
+  left: 50.92%;
+  top: 72.99%;
+  width: 17.31%;
+  pointer-events: none;
+  transform: translate(-50%, -50%) rotate(var(--knob-rot, 0deg));
+  transform-origin: 50% 50%;
+}
+
+/* transparent hit areas laid over the painting */
+.gasha-hot {
+  position: absolute;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+  touch-action: none;
+}
+
+.gasha-hot:disabled {
+  cursor: default;
+}
+
+.gasha-hot-knob {
+  left: 50.9%;
+  top: 73%;
+  width: max(44px, 21%);
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%);
+}
+
+.gasha-hot:focus-visible {
+  outline: 2px solid var(--green);
+  outline-offset: 3px;
+}
+
+/* soft attention rings that sit on the slot / handle / tray */
+.gasha-ping {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.86);
+  transition: opacity 260ms ease, transform 260ms ease;
+}
+
+.gasha-ping::after {
+  content: "";
+  position: absolute;
+  inset: -14%;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, currentColor 0%, transparent 74%);
+  opacity: 0.34;
+}
+
+.gasha-ping-slot {
+  left: 74.1%;
+  top: 70.2%;
+  width: 26%;
+  height: 21%;
+  color: var(--green);
+}
+
+.gasha-ping-knob {
+  left: 50.9%;
+  top: 73%;
+  width: 34%;
+  aspect-ratio: 1;
+  color: var(--green);
+}
+
+.gasha-ping-tray {
+  left: 50.2%;
+  top: 87.2%;
+  width: 38%;
+  height: 22%;
+  color: var(--orange);
+}
+
+.gasha[data-state="idle"] .gasha-ping-slot,
+.gasha[data-state="coinInserting"] .gasha-ping-slot,
+.gasha[data-state="readyToTurn"] .gasha-ping-knob,
+.gasha[data-state="capsuleReady"] .gasha-ping-tray {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+  animation: gashaPing 2.4s ease-out infinite;
+}
+
+@keyframes gashaPing {
+  0%,
+  100% { opacity: 0.85; transform: translate(-50%, -50%) scale(1); }
+  50% { opacity: 0.35; transform: translate(-50%, -50%) scale(1.07); }
+}
+
+/* --------------------------------------------------------- handwritten hints */
+
+.gasha-hint {
+  position: absolute;
+  width: max-content;
+  max-width: 180px;
+  color: var(--orange);
+  font-family: var(--gasha-hand);
+  font-size: clamp(1.05rem, 1.5vw, 1.35rem);
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: 0.01em;
+  pointer-events: none;
+  opacity: 0;
+  transform: translate(-50%, 0) rotate(-3deg) translateY(6px);
+  transition: opacity 320ms ease, transform 320ms ease;
+}
+
+.gasha-hint.is-shown {
+  opacity: 1;
+  transform: translate(-50%, 0) rotate(-3deg) translateY(0);
+}
+
+.gasha-hint-turn {
+  left: 24%;
+  top: 66%;
+  transform: translate(-50%, -50%) rotate(-4deg) translateY(6px);
+}
+
+.gasha-hint-turn.is-shown {
+  transform: translate(-50%, -50%) rotate(-4deg);
+}
+
+.gasha-hint-open {
+  left: 50%;
+  top: calc(100% + 2px);
+}
+
+/* -------------------------------------------------------------- the $1 coin */
+
+.gasha-coin {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 4;
+  width: var(--gs-coin);
+  height: var(--gs-coin);
+  margin: calc(var(--gs-coin) / -2) 0 0 calc(var(--gs-coin) / -2);
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+  opacity: 0;
+  transform: translate3d(0, 0, 0);
+  will-change: transform, opacity;
+}
+
+.gasha-coin:disabled {
+  cursor: default;
+}
+
+.gasha-coin:focus-visible {
+  outline: 2px solid var(--green);
+  outline-offset: 5px;
+}
+
+.gasha-coin-face {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: url("./assets/gashapon-coin.webp") center / contain no-repeat;
+  filter: drop-shadow(0 6px 8px rgba(18, 44, 79, 0.18));
+  transform-origin: 50% 50%;
+}
+
+.gasha[data-state="idle"] .gasha-coin-face {
+  animation: gashaCoinFloat 3.6s ease-in-out infinite;
+}
+
+.gasha-coin:hover .gasha-coin-face {
+  filter: drop-shadow(0 9px 12px rgba(18, 44, 79, 0.24));
+}
+
+@keyframes gashaCoinFloat {
+  0%, 100% { transform: translateY(0) rotate(-2deg) scale(1); }
+  38% { transform: translateY(-7px) rotate(2deg) scale(1.025); }
+  70% { transform: translateY(-2px) rotate(-1deg) scale(1); }
+}
+
+.gasha-coin-hint {
+  position: absolute;
+  left: 50%;
+  top: calc(100% + 4px);
+  width: max-content;
+  color: var(--orange);
+  font-family: var(--gasha-hand);
+  font-size: clamp(1rem, 1.4vw, 1.28rem);
+  font-weight: 600;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transform: translate(-50%, 4px) rotate(-4deg);
+  transition: opacity 420ms ease 900ms, transform 420ms ease 900ms;
+}
+
+.gasha[data-state="idle"] .gasha-coin-hint {
+  opacity: 1;
+  transform: translate(-50%, 0) rotate(-4deg);
+}
+
+/* three small painted sparkles orbiting the coin */
+.gasha-spark {
+  position: absolute;
+  width: 26%;
+  height: 26%;
+  color: var(--green);
+  pointer-events: none;
+  opacity: 0;
+}
+
+.gasha-spark svg {
+  width: 100%;
+  height: 100%;
+  fill: currentColor;
+  stroke: none;
+}
+
+.gasha[data-state="idle"] .gasha-spark {
+  animation: gashaSparkle 3.6s ease-in-out infinite;
+}
+
+.gasha-spark-1 { left: -14%; top: 4%; animation-delay: 0.1s; }
+.gasha-spark-2 { left: 84%; top: 16%; width: 19%; height: 19%; color: var(--orange); animation-delay: 1.2s; }
+.gasha-spark-3 { left: 62%; top: 82%; width: 15%; height: 15%; color: var(--blue); animation-delay: 2.3s; }
+
+@keyframes gashaSparkle {
+  0%, 62%, 100% { opacity: 0; transform: scale(0.5) rotate(-12deg); }
+  16% { opacity: 0.95; transform: scale(1) rotate(6deg); }
+  38% { opacity: 0.5; transform: scale(0.82) rotate(0deg); }
+}
+
+/* ----------------------------------------------------------- machine motion */
+
+.gasha-stage.is-turning {
+  animation: gashaShake 1.05s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+
+@keyframes gashaShake {
+  0%, 100% { transform: translate3d(0, 0, 0) rotate(0deg); }
+  12% { transform: translate3d(-1.4px, 0.6px, 0) rotate(-0.22deg); }
+  27% { transform: translate3d(1.6px, -0.5px, 0) rotate(0.24deg); }
+  43% { transform: translate3d(-1.2px, 0.8px, 0) rotate(-0.18deg); }
+  61% { transform: translate3d(1.3px, -0.4px, 0) rotate(0.2deg); }
+  79% { transform: translate3d(-0.7px, 0.4px, 0) rotate(-0.1deg); }
+}
+
+.gasha-machine-inner.is-rattling {
+  animation: gashaRattle 1.05s ease-in-out both;
+}
+
+@keyframes gashaRattle {
+  0%, 100% { transform: translate3d(0, 0, 0) rotate(0deg); }
+  15% { transform: translate3d(1.5px, 2px, 0) rotate(0.5deg); }
+  32% { transform: translate3d(-2px, 3.5px, 0) rotate(-0.6deg); }
+  54% { transform: translate3d(2.5px, 1.5px, 0) rotate(0.5deg); }
+  76% { transform: translate3d(-1.5px, 2.5px, 0) rotate(-0.3deg); }
+}
+
+.gasha[data-state="idle"] .gasha-machine-inner {
+  animation: gashaBreathe 7s ease-in-out infinite;
+}
+
+@keyframes gashaBreathe {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  46% { transform: translate3d(0.6px, 1.4px, 0); }
+  72% { transform: translate3d(-0.5px, 0.6px, 0); }
+}
+
+/* ---------------------------------------------------------------- a capsule */
+
+.gasha-capsule {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 5;
+  width: var(--gs-cap);
+  height: calc(var(--gs-cap) * 1.171);
+  margin: calc(var(--gs-cap) * -0.5855) 0 0 calc(var(--gs-cap) / -2);
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  opacity: 0;
+  visibility: hidden;
+  transform-origin: 50% 50%;
+  will-change: transform, opacity;
+}
+
+.gasha-capsule.is-live {
+  visibility: visible;
+}
+
+.gasha-capsule:not(.is-grabbable) {
+  pointer-events: none;
+}
+
+.gasha-capsule:focus-visible {
+  outline: 2px solid var(--green);
+  outline-offset: 6px;
+  border-radius: 50%;
+}
+
+.gasha-cap-half {
+  position: absolute;
+  inset: 0;
+  background-image: var(--cap-img);
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  transform-origin: 50% 50%;
+  will-change: transform, opacity;
+}
+
+/* the painted capsules split just above their middle */
+.gasha-cap-half.is-top { clip-path: inset(0 0 47.3% 0); }
+.gasha-cap-half.is-bottom { clip-path: inset(52.7% 0 0 0); }
+
+.gasha-capsule.is-grabbable {
+  animation: gashaCapsuleNudge 2.1s ease-in-out infinite;
+}
+
+@keyframes gashaCapsuleNudge {
+  0%, 100% { filter: drop-shadow(0 0 0 rgba(199, 119, 77, 0)); }
+  50% { filter: drop-shadow(0 0 10px rgba(199, 119, 77, 0.42)); }
+}
+
+.gasha-capsule.is-wiggling .gasha-cap-half {
+  animation: gashaWiggle 0.42s ease-in-out 1 both;
+}
+
+@keyframes gashaWiggle {
+  0%, 100% { transform: rotate(0deg); }
+  18% { transform: rotate(-6deg); }
+  42% { transform: rotate(5.5deg); }
+  66% { transform: rotate(-3.5deg); }
+  86% { transform: rotate(2deg); }
+}
+
+/* burst of sparkles when the capsule cracks open */
+.gasha-burst {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 6;
+  pointer-events: none;
+}
+
+.gasha-burst span {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 12px;
+  height: 12px;
+  margin: -6px 0 0 -6px;
+  color: var(--green);
+  opacity: 0;
+}
+
+.gasha-burst svg {
+  width: 100%;
+  height: 100%;
+  fill: currentColor;
+  stroke: none;
+}
+
+.gasha-burst.is-firing span {
+  animation: gashaBurst 0.72s cubic-bezier(0.2, 0.7, 0.3, 1) both;
+}
+
+@keyframes gashaBurst {
+  0% { opacity: 0; transform: translate(0, 0) scale(0.3) rotate(0deg); }
+  22% { opacity: 1; }
+  100% {
+    opacity: 0;
+    transform: translate(var(--bx), var(--by)) scale(1.05) rotate(var(--br));
+  }
+}
+
+/* ------------------------------------------------------------- right column */
+
+.gasha-panel {
+  display: grid;
+  gap: 14px;
+  align-content: center;
+  min-width: 0;
+}
+
+.gasha .gasha-kicker {
+  margin: 0;
+  color: var(--orange);
+  font-family: var(--gasha-hand);
+  font-size: clamp(1.15rem, 1.8vw, 1.5rem);
+  font-weight: 600;
+  line-height: 1;
+}
+
+.gasha-title {
+  margin: 0;
+  color: var(--deep);
+  font-size: clamp(1.5rem, 2.6vw, 2.15rem);
+  font-weight: 900;
+  line-height: 1.1;
+  letter-spacing: 0;
+}
+
+.gasha .gasha-lede {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.98rem;
+  line-height: 1.65;
+}
+
+.gasha .gasha-status {
+  margin: 0;
+  min-height: 1.3em;
+  color: var(--blue);
+  font-size: 0.84rem;
+  font-weight: 800;
+  letter-spacing: 0;
+}
+
+/* legend and story card share one cell so they can cross-fade */
+.gasha-swap {
+  position: relative;
+  display: grid;
+  min-height: 206px;
+  align-content: start;
+}
+
+.gasha-swap > * {
+  grid-area: 1 / 1;
+  transition: opacity 320ms ease, transform 320ms ease;
+}
+
+.gasha-swap > [hidden] {
+  display: none;
+}
+
+.gasha-legend {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.gasha-legend li {
+  display: grid;
+  grid-template-columns: 30px minmax(0, 1fr);
+  gap: 10px;
+  align-items: center;
+  opacity: 0.55;
+  transition: opacity 260ms ease;
+}
+
+.gasha-legend li.is-found {
+  opacity: 1;
+}
+
+.gasha-legend img {
+  display: block;
+  width: 30px;
+  height: auto;
+}
+
+.gasha-legend b {
+  display: block;
+  color: var(--deep);
+  font-size: 0.8rem;
+  font-weight: 800;
+  line-height: 1.25;
+}
+
+.gasha-legend span {
+  display: block;
+  color: var(--muted);
+  font-size: 0.72rem;
+  line-height: 1.35;
+}
+
+.gasha-legend li.is-found b::after {
+  content: " ✓";
+  color: var(--green);
+}
+
+/* --------------------------------------------------------- the story card */
+
+.gasha-reveal {
+  display: grid;
+  align-content: start;
+  padding-bottom: calc(var(--gs-cap) * 0.6);
+}
+
+.gasha-card {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 470px;
+  margin: 0;
+  padding: 22px 26px 20px;
+  color: var(--muted);
+  background: var(--gasha-card-paper);
+  border: 1px solid var(--card-tone, var(--line));
+  border-radius: 3px;
+  box-shadow: 0 16px 34px rgba(18, 44, 79, 0.13);
+  transform: rotate(-0.55deg);
+  overflow: hidden;
+}
+
+.gasha-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.32;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23p)' opacity='.2'/%3E%3C/svg%3E");
+}
+
+.gasha-card::after {
+  content: "";
+  position: absolute;
+  right: -26px;
+  top: 14px;
+  width: 78px;
+  height: 20px;
+  background: color-mix(in srgb, var(--card-tone, var(--orange)) 26%, #fff 74%);
+  border-left: 1px dashed rgba(255, 255, 255, 0.6);
+  opacity: 0.7;
+  transform: rotate(34deg);
+  pointer-events: none;
+}
+
+.gasha-card-head {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin-bottom: 12px;
+}
+
+.gasha-card-head img {
+  display: block;
+  width: 26px;
+  height: auto;
+}
+
+.gasha-card-chip {
+  color: var(--card-ink, var(--deep));
+  font-size: 0.66rem;
+  font-weight: 800;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+.gasha-card h3 {
+  position: relative;
+  margin: 0 0 10px;
+  color: var(--deep);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.24rem;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.gasha .gasha-card p {
+  position: relative;
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.88rem;
+  line-height: 1.62;
+}
+
+.gasha .gasha-card-meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 14px;
+  color: var(--card-ink, var(--muted));
+  font-size: 0.7rem;
+  font-weight: 700;
+  opacity: 0.8;
+}
+
+.gasha-card-meta svg {
+  width: 12px;
+  height: 12px;
+  flex: 0 0 auto;
+  stroke-width: 1.8;
+}
+
+.gasha-card.is-entering {
+  opacity: 0;
+  transform: rotate(-0.55deg) translateY(16px) scale(0.9);
+}
+
+.gasha-card {
+  transition: opacity 420ms cubic-bezier(0.2, 0.9, 0.25, 1.05),
+    transform 460ms cubic-bezier(0.2, 0.9, 0.25, 1.05);
+}
+
+/* ------------------------------------------------------------- collection */
+
+.gasha-collection {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  max-height: 232px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  list-style: none;
+}
+
+.gasha-collection li {
+  margin: 0;
+}
+
+.gasha-chip {
+  display: grid;
+  grid-template-columns: 24px minmax(0, 1fr);
+  gap: 10px;
+  align-items: center;
+  width: 100%;
+  min-height: 44px;
+  padding: 6px 10px;
+  text-align: left;
+  color: var(--deep);
+  background: color-mix(in srgb, var(--paper) 86%, #fff 14%);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  font: inherit;
+  cursor: pointer;
+  transition: border-color 160ms ease, transform 160ms ease;
+}
+
+.gasha-chip:hover,
+.gasha-chip:focus-visible {
+  border-color: var(--green);
+  transform: translateX(2px);
+}
+
+.gasha-chip img {
+  width: 24px;
+  height: auto;
+}
+
+.gasha-chip b {
+  display: block;
+  font-size: 0.82rem;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.gasha-chip span {
+  display: block;
+  color: var(--muted);
+  font-size: 0.68rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.gasha .gasha-collection-empty {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.86rem;
+  font-style: italic;
+}
+
+/* -------------------------------------------------------------- foot / CTA */
+
+.gasha-foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 14px;
+  margin-top: 2px;
+}
+
+.gasha .gasha-progress {
+  margin: 0;
+  margin-right: auto;
+  color: var(--muted);
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.gasha-btn {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  justify-content: center;
+  padding: 0 18px;
+  color: var(--deep);
+  background: transparent;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  font: inherit;
+  font-size: 0.8rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: color 160ms ease, border-color 160ms ease, background-color 160ms ease;
+}
+
+.gasha-btn:hover,
+.gasha-btn:focus-visible {
+  color: var(--green);
+  border-color: var(--green);
+}
+
+.gasha-btn-primary {
+  color: #fff;
+  background: var(--blue);
+  border-color: var(--blue);
+}
+
+.gasha-btn-primary:hover,
+.gasha-btn-primary:focus-visible {
+  color: #fff;
+  background: var(--green);
+  border-color: var(--green);
+}
+
+.gasha-btn:focus-visible,
+.gasha-sound:focus-visible {
+  outline: 2px solid var(--green);
+  outline-offset: 3px;
+}
+
+.gasha-btn[hidden] {
+  display: none;
+}
+
+.gasha-sound {
+  display: grid;
+  width: 44px;
+  height: 44px;
+  flex: 0 0 auto;
+  place-items: center;
+  color: var(--deep);
+  background: transparent;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: color 160ms ease, border-color 160ms ease;
+}
+
+.gasha-sound:hover {
+  color: var(--green);
+  border-color: var(--green);
+}
+
+.gasha-sound svg {
+  width: 19px;
+  height: 19px;
+  stroke-width: 1.8;
+}
+
+.gasha-sound .gasha-sound-off { display: none; }
+.gasha-sound[aria-pressed="false"] { color: var(--muted); }
+.gasha-sound[aria-pressed="false"] .gasha-sound-on { display: none; }
+.gasha-sound[aria-pressed="false"] .gasha-sound-off { display: block; }
+
+/* --------------------------------------------------------------- responsive */
+
+@media (max-width: 900px) {
+  .gasha-inner {
+    grid-template-columns: 1fr;
+    gap: 26px;
+    justify-items: center;
+  }
+
+  .gasha-stage-wrap {
+    width: 100%;
+    padding: 0 0 74px;
+  }
+
+  .gasha-stage {
+    width: min(300px, 68vw);
+    margin: 0 auto;
+  }
+
+  .gasha-panel {
+    width: 100%;
+    max-width: 460px;
+    justify-self: center;
+  }
+
+  .gasha-legend {
+    gap: 10px 14px;
+  }
+
+  .gasha-swap {
+    min-height: 210px;
+  }
+
+  .gasha-foot {
+    justify-content: center;
+  }
+
+  .gasha-progress {
+    width: 100%;
+    margin-right: 0;
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .gasha-legend {
+    grid-template-columns: 1fr;
+  }
+
+  .gasha-swap {
+    min-height: 260px;
+  }
+}
+
+/* ------------------------------------- pause everything while off-screen */
+
+.gasha.is-paused *,
+.gasha.is-paused *::before,
+.gasha.is-paused *::after {
+  animation-play-state: paused !important;
+}
+
+/* ----------------------------------------------------------- reduced motion */
+
+@media (prefers-reduced-motion: reduce) {
+  .gasha-coin-face,
+  .gasha-spark,
+  .gasha-machine-inner,
+  .gasha-capsule.is-grabbable,
+  .gasha-ping,
+  .gasha-stage.is-turning,
+  .gasha-machine-inner.is-rattling,
+  .gasha-capsule.is-wiggling .gasha-cap-half,
+  .gasha-burst.is-firing span {
+    animation: none !important;
+  }
+
+  .gasha-ping {
+    opacity: 1;
+  }
+
+  .gasha-burst {
+    display: none;
+  }
+
+  .gasha-card,
+  .gasha-hint,
+  .gasha-coin-hint,
+  .gasha-swap > * {
+    transition-duration: 120ms !important;
+    transition-delay: 0s !important;
+  }
+
+  .gasha-card.is-entering {
+    transform: rotate(-0.55deg);
+  }
+}
