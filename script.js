@@ -1199,13 +1199,29 @@ if (heroVideo && heroCanvas) {
   const pixelCount = heroCanvas.width * heroCanvas.height;
   const backgroundQueue = new Uint32Array(pixelCount);
   const backgroundVisited = new Uint8Array(pixelCount);
+  const directVideoSrc = "./assets/hero-character.mov";
+  const prefersDirectVideo = window.matchMedia("(pointer: coarse)").matches
+    || /iPad|iPhone|iPod/.test(navigator.userAgent)
+    || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
 
   heroVideo.loop = false;
   heroVideo.muted = true;
   heroVideo.playsInline = true;
+  heroVideo.autoplay = true;
+  heroVideo.preload = "auto";
+  heroVideo.setAttribute("muted", "");
+  heroVideo.setAttribute("playsinline", "");
+  heroVideo.setAttribute("webkit-playsinline", "");
+  heroVideo.setAttribute("autoplay", "");
+
+  const useDirectVideo = () => {
+    if (heroVideo.src.endsWith("hero-character.mov")) return;
+    heroVideo.src = directVideoSrc;
+    heroVideo.load();
+  };
 
   const base64Video = window.HERO_CHARACTER_VIDEO_BASE64;
-  if (base64Video) {
+  if (base64Video && !prefersDirectVideo) {
     const chunkSize = 512 * 1024;
     const chunks = [];
 
@@ -1221,7 +1237,7 @@ if (heroVideo && heroCanvas) {
     heroVideo.src = URL.createObjectURL(new Blob(chunks, { type: "video/quicktime" }));
     window.HERO_CHARACTER_VIDEO_BASE64 = "";
   } else {
-    heroVideo.src = "./assets/hero-character.mov";
+    useDirectVideo();
   }
 
   const drawHeroFrame = () => {
@@ -1344,10 +1360,24 @@ if (heroVideo && heroCanvas) {
       hasStarted = false;
       document.documentElement.dataset.heroAnimation = "waiting";
       window.addEventListener("pointerdown", playOnce, { once: true });
+      window.addEventListener("touchstart", playOnce, { once: true, passive: true });
     }
   };
 
+  const primeHeroVideo = () => {
+    drawHeroFrame();
+    playOnce();
+  };
+
+  heroVideo.addEventListener("error", () => {
+    document.documentElement.dataset.heroAnimation = "video-error";
+    if (!heroVideo.src.endsWith("hero-character.mov")) {
+      useDirectVideo();
+    }
+  });
+  heroVideo.addEventListener("loadedmetadata", primeHeroVideo, { once: true });
   heroVideo.addEventListener("loadeddata", playOnce, { once: true });
+  heroVideo.addEventListener("canplay", playOnce, { once: true });
   heroVideo.addEventListener("play", () => {
     cancelFrameLoop();
     queueFrame();
