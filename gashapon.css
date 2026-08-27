@@ -612,7 +612,11 @@
   border-radius: 3px;
   box-shadow: 0 16px 34px rgba(18, 44, 79, 0.13);
   transform: rotate(-0.55deg);
-  overflow: hidden;
+  max-height: min(58vh, 480px);
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
 }
 
 .gasha-card::before {
@@ -703,6 +707,196 @@
 .gasha-card {
   transition: opacity 420ms cubic-bezier(0.2, 0.9, 0.25, 1.05),
     transform 460ms cubic-bezier(0.2, 0.9, 0.25, 1.05);
+}
+
+/* when a long story overflows, fade the bottom edge so it reads as scrollable */
+.gasha-card-fade {
+  position: sticky;
+  bottom: -20px;
+  z-index: 3;
+  height: 48px;
+  margin: -48px -26px 0;
+  background: linear-gradient(to top, var(--gasha-card-paper) 16%, transparent);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 200ms ease;
+}
+
+.gasha-card.has-more .gasha-card-fade {
+  opacity: 1;
+}
+
+/* ------------------------------------------------- optional story blocks
+   Each of these only appears when the matching field exists in
+   capsule-stories.js — a card with just `story` still looks complete. */
+
+.gasha .gasha-card p + p {
+  margin-top: 10px;
+}
+
+.gasha .gasha-card-teaser {
+  margin-bottom: 12px;
+  color: var(--card-ink, var(--deep));
+  font-size: 0.84rem;
+  font-style: italic;
+  line-height: 1.5;
+}
+
+.gasha-card-rank,
+.gasha-card-sections {
+  margin: 15px 0 0;
+  padding: 0 0 0 1.5em;
+  list-style: decimal;
+}
+
+.gasha-card-rank li::marker,
+.gasha-card-sections li::marker {
+  color: var(--card-ink, var(--green));
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+.gasha-card-rank li + li {
+  margin-top: 5px;
+}
+
+.gasha-card-rank b {
+  color: var(--deep);
+  font-size: 0.86rem;
+  font-weight: 700;
+  line-height: 1.45;
+}
+
+.gasha-card-rank span {
+  display: block;
+  color: var(--muted);
+  font-size: 0.78rem;
+  line-height: 1.45;
+}
+
+.gasha-card-sections li + li {
+  margin-top: 14px;
+}
+
+.gasha-card-sections b {
+  display: block;
+  margin-bottom: 4px;
+  color: var(--deep);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 0.96rem;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.gasha-card-quote {
+  position: relative;
+  margin: 16px 0 0;
+  padding: 12px 14px;
+  background: color-mix(in srgb, var(--card-tone, var(--green)) 13%, transparent);
+  border-left: 2px solid color-mix(in srgb, var(--card-tone, var(--green)) 62%, transparent);
+  border-radius: 2px;
+}
+
+.gasha-card-quote-lead {
+  display: block;
+  margin-bottom: 5px;
+  color: var(--card-ink, var(--muted));
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.gasha .gasha-card-quote p {
+  color: var(--deep);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 0.92rem;
+  font-style: italic;
+  line-height: 1.55;
+}
+
+.gasha .gasha-card-takeaway {
+  display: inline-block;
+  margin-top: 16px;
+  padding: 7px 12px;
+  color: var(--deep);
+  background: color-mix(in srgb, var(--card-tone, var(--green)) 24%, transparent);
+  border-radius: 2px;
+  font-size: 0.8rem;
+  font-weight: 800;
+  line-height: 1.35;
+}
+
+.gasha-card-note {
+  position: relative;
+  margin-top: 18px;
+  padding-top: 14px;
+  border-top: 1px dashed color-mix(in srgb, var(--card-tone, var(--line)) 48%, transparent);
+}
+
+.gasha-card-note b {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--card-ink, var(--deep));
+  font-size: 0.8rem;
+  font-weight: 800;
+  line-height: 1.3;
+}
+
+.gasha .gasha-card-note p {
+  font-size: 0.85rem;
+}
+
+/* an optional personal photo, taped in like a small print */
+.gasha-card-photo {
+  position: relative;
+  width: min(200px, 64%);
+  margin: 22px auto 4px;
+  padding: 8px 8px 10px;
+  background: #fff;
+  border: 1px solid rgba(18, 44, 79, 0.1);
+  box-shadow: 0 9px 20px rgba(18, 44, 79, 0.16);
+  transform: rotate(-1.7deg);
+}
+
+.gasha-card-photo::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: -9px;
+  width: 56px;
+  height: 17px;
+  background: color-mix(in srgb, var(--card-tone, var(--orange)) 32%, #fff 68%);
+  border-left: 1px dashed rgba(255, 255, 255, 0.65);
+  border-right: 1px dashed rgba(255, 255, 255, 0.65);
+  opacity: 0.9;
+  transform: translateX(-50%) rotate(-2.4deg);
+}
+
+.gasha-card-photo img {
+  display: block;
+  width: 100%;
+  height: auto;
+  min-height: 60px;
+  background: color-mix(in srgb, var(--card-tone, var(--line)) 14%, #f1efea);
+}
+
+.gasha-card-photo figcaption {
+  margin-top: 7px;
+  color: var(--muted);
+  font-family: var(--gasha-hand);
+  font-size: 1.02rem;
+  line-height: 1.15;
+  text-align: center;
+}
+
+/* a category with no stories yet (e.g. Life Creator) */
+.gasha-legend li.is-soon {
+  opacity: 0.42;
+}
+
+.gasha-legend li.is-soon img {
+  filter: grayscale(0.4);
 }
 
 /* ------------------------------------------------------------- collection */

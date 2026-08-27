@@ -256,7 +256,7 @@
 
   /* -------------------------------------------------------- story selection */
 
-  const STORAGE_KEY = "dollar.gashapon.seen.v1";
+  const STORAGE_KEY = "dollar.gashapon.seen.v2";
   const stories = Array.isArray(window.capsuleStories) ? window.capsuleStories : [];
   const categories = Array.isArray(window.capsuleCategories) ? window.capsuleCategories : [];
   const colorOf = (story) =>
@@ -433,6 +433,20 @@
   const svgPin = () =>
     `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-5.2 7-11a7 7 0 1 0-14 0c0 5.8 7 11 7 11Z"></path><circle cx="12" cy="10" r="2.5"></circle></svg>`;
 
+  /* every block below is optional — a story with only `story` still renders a
+     complete card, and so does one with a ranking, a photo, or all of them */
+  const paragraphsInto = (parent, value, className) => {
+    if (!value) return;
+    const list = Array.isArray(value) ? value : [value];
+    list.forEach((text) => {
+      if (!text) return;
+      const p = document.createElement("p");
+      if (className) p.className = className;
+      p.textContent = text;
+      parent.append(p);
+    });
+  };
+
   const renderCard = (story, animate) => {
     const color = colorOf(story);
     reveal.innerHTML = "";
@@ -456,10 +470,110 @@
     const title = document.createElement("h3");
     title.textContent = story.title;
 
-    const body = document.createElement("p");
-    body.textContent = story.story;
+    card.append(head, title);
 
-    card.append(head, title, body);
+    if (story.teaser) {
+      const teaser = document.createElement("p");
+      teaser.className = "gasha-card-teaser";
+      teaser.textContent = story.teaser;
+      card.append(teaser);
+    }
+
+    paragraphsInto(card, story.story);
+
+    /* a numbered ranking — ["A"] or [{ label, text }] */
+    if (Array.isArray(story.list) && story.list.length) {
+      const ranking = document.createElement("ol");
+      ranking.className = "gasha-card-rank";
+      story.list.forEach((entry) => {
+        const item = document.createElement("li");
+        const label = document.createElement("b");
+        label.textContent = typeof entry === "string" ? entry : entry.label;
+        item.append(label);
+        if (entry && entry.text) {
+          const note = document.createElement("span");
+          note.textContent = entry.text;
+          item.append(note);
+        }
+        ranking.append(item);
+      });
+      card.append(ranking);
+    }
+
+    /* numbered blocks with their own heading */
+    if (Array.isArray(story.sections) && story.sections.length) {
+      const sections = document.createElement("ol");
+      sections.className = "gasha-card-sections";
+      story.sections.forEach((entry) => {
+        const item = document.createElement("li");
+        if (entry.heading) {
+          const heading = document.createElement("b");
+          heading.textContent = entry.heading;
+          item.append(heading);
+        }
+        paragraphsInto(item, entry.text);
+        sections.append(item);
+      });
+      card.append(sections);
+    }
+
+    if (story.quote) {
+      const block = document.createElement("blockquote");
+      block.className = "gasha-card-quote";
+      if (story.quoteLead) {
+        const lead = document.createElement("span");
+        lead.className = "gasha-card-quote-lead";
+        lead.textContent = story.quoteLead;
+        block.append(lead);
+      }
+      const line = document.createElement("p");
+      line.textContent = story.quote;
+      block.append(line);
+      card.append(block);
+    }
+
+    paragraphsInto(card, story.outro);
+
+    if (story.takeaway) {
+      const takeaway = document.createElement("p");
+      takeaway.className = "gasha-card-takeaway";
+      takeaway.textContent = story.takeaway;
+      card.append(takeaway);
+    }
+
+    if (story.note) {
+      const note = document.createElement("aside");
+      note.className = "gasha-card-note";
+      if (story.note.heading) {
+        const heading = document.createElement("b");
+        heading.textContent = story.note.heading;
+        note.append(heading);
+      }
+      paragraphsInto(note, story.note.text);
+      card.append(note);
+    }
+
+    /* optional personal photo — taped in like a small print */
+    const photo = typeof story.image === "string" ? { src: story.image } : story.image;
+    if (photo && photo.src) {
+      const figure = document.createElement("figure");
+      figure.className = "gasha-card-photo";
+      const img = document.createElement("img");
+      img.src = photo.src;
+      img.alt = photo.alt || "";
+      img.loading = "lazy";
+      img.decoding = "async";
+      img.draggable = false;
+      /* if the file is missing the card simply loses the photo, not its layout */
+      img.addEventListener("error", () => figure.remove(), { once: true });
+      figure.append(img);
+      if (photo.caption) {
+        const caption = document.createElement("figcaption");
+        caption.textContent = photo.caption;
+        figure.append(caption);
+      }
+      card.append(figure);
+    }
 
     if (story.meta) {
       const meta = document.createElement("p");
@@ -469,8 +583,22 @@
       card.append(meta);
     }
 
+    const fade = document.createElement("div");
+    fade.className = "gasha-card-fade";
+    fade.setAttribute("aria-hidden", "true");
+    card.append(fade);
+
     if (animate) card.classList.add("is-entering");
     reveal.append(card);
+
+    /* long stories scroll inside the card — show a soft edge while there's more */
+    const syncFade = () =>
+      card.classList.toggle(
+        "has-more",
+        card.scrollHeight - card.clientHeight - card.scrollTop > 6
+      );
+    card.addEventListener("scroll", syncFade, { passive: true });
+    requestAnimationFrame(syncFade);
     reveal.hidden = false;
     legend.hidden = true;
     collection.hidden = true;
@@ -483,6 +611,33 @@
       });
     }
     return card;
+  };
+
+  /* the six capsule types, built straight from capsuleCategories so the data
+     file stays the only place content lives */
+  const renderLegend = () => {
+    legend.innerHTML = "";
+    categories.forEach((entry) => {
+      const count = stories.filter((story) => story.category === entry.label).length;
+      const item = document.createElement("li");
+      item.dataset.category = entry.label;
+      if (entry.comingSoon || !count) item.classList.add("is-soon");
+
+      const thumb = document.createElement("img");
+      thumb.src = `./assets/capsule-${entry.color}.webp`;
+      thumb.alt = "";
+      thumb.setAttribute("aria-hidden", "true");
+
+      const text = document.createElement("div");
+      const label = document.createElement("b");
+      label.textContent = entry.label;
+      const blurb = document.createElement("span");
+      blurb.textContent = entry.comingSoon || !count ? "Coming soon." : entry.blurb || "";
+      text.append(label, blurb);
+
+      item.append(thumb, text);
+      legend.append(item);
+    });
   };
 
   const updateProgress = () => {
@@ -856,6 +1011,7 @@
     AudioKit.enabled ? "Turn machine sound off" : "Turn machine sound on"
   );
 
+  renderLegend();
   updateProgress();
   measure();
   placeCoin();
