@@ -254,7 +254,7 @@ const openFreelyProject = () => {
 
 const openPortfolioReport = (trigger) => {
   if (!portfolioReportDialog || !portfolioReportViewer || !trigger) return;
-  const { projectIndex, projectTitle, reportPages, reportSrc } = trigger.dataset;
+  const { projectIndex, projectLabel, projectTitle, reportPages, reportSrc } = trigger.dataset;
   const reportUrl = reportSrc.split("#")[0];
   const introPage = projectIntroPages.find((page) => page.dataset.projectIntro === projectTitle);
   const hasProjectIntro = Boolean(introPage);
@@ -265,7 +265,7 @@ const openPortfolioReport = (trigger) => {
   });
   if (portfolioReportPanel) portfolioReportPanel.scrollTop = 0;
   portfolioReportDialog.setAttribute("aria-label", `${projectTitle} project`);
-  portfolioReportIndex.textContent = `${projectIndex} / Selected work`;
+  portfolioReportIndex.textContent = projectLabel || `${projectIndex} / Selected work`;
   portfolioReportMeta.textContent = `${projectTitle} · ${reportPages} pages`;
   portfolioReportLink.href = reportUrl;
   portfolioReportLink.setAttribute("aria-label", `Open ${projectTitle} report in a new tab`);
