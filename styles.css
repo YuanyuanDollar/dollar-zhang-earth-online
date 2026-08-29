@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Allura&family=Caveat:wght@500;600&family=Inter:wght@400;500;700;800;900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Allura&family=Caveat:wght@500;600&family=Inter:wght@400;500;700;800;900&family=Playfair+Display:wght@700;800&display=swap");
 
 :root {
   --paper: #f3f6f1;
@@ -9,6 +9,7 @@
   --green: #32a852;
   --orange: #c7774d;
   --line: rgba(18, 44, 79, 0.22);
+  --hero-navy: #032756;
 }
 
 * {
@@ -141,10 +142,11 @@ a {
 
 .scatter-letter {
   display: inline-block;
-  color: var(--ink);
-  font-size: clamp(1.55rem, 6vw, 6.6rem);
-  font-weight: 900;
-  line-height: 0.82;
+  color: var(--hero-navy);
+  font-family: "Playfair Display", Georgia, "Times New Roman", serif;
+  font-size: clamp(1.62rem, 6.3vw, 6.9rem);
+  font-weight: 800;
+  line-height: 0.95;
   letter-spacing: 0;
   transform-origin: center;
   will-change: transform;

@@ -77,10 +77,11 @@ const initOnlineGlobe = () => {
 
     const globe = new THREE.Mesh(
       new THREE.SphereGeometry(1, 64, 48),
-      /* Lambert = diffuse only, so the globe never picks up a white hotspot */
-      new THREE.MeshLambertMaterial({
+      /* Unlit, so the map renders exactly as painted: no hotspot, and the
+         land is the true #6fd989 green rather than a shaded version of it */
+      new THREE.MeshBasicMaterial({
         map: mapTexture,
-        color: 0x2c80d6
+        color: 0xffffff
       })
     );
     globe.rotation.y = -1.75;
@@ -97,11 +98,7 @@ const initOnlineGlobe = () => {
     );
     globeGroup.add(atmosphere);
 
-    /* even, flat lighting: enough shaping to read as a sphere, no glare */
-    scene.add(new THREE.AmbientLight(0xffffff, 0.86));
-    const fillLight = new THREE.DirectionalLight(0xffffff, 0.42);
-    fillLight.position.set(-1.6, 1.5, 3.2);
-    scene.add(fillLight);
+    /* no lights: an unlit globe keeps the map's colours exact */
 
     const resize = () => {
       const size = Math.max(32, Math.round(onlineGlobe.getBoundingClientRect().width));
@@ -917,6 +914,16 @@ if (scatterTitle && heroSection && introSection && badgeCard && badgeSignature) 
   measureLetterOrigins();
   updatePileTargets();
   updateScrollProgress();
+
+  /* the hero name is a web font — re-measure once it has actually swapped in */
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(() => {
+      measureLetterOrigins();
+      updatePileTargets();
+      updateScrollProgress();
+    }).catch(() => {});
+  }
+
   requestAnimationFrame(animateScatter);
 }
 
