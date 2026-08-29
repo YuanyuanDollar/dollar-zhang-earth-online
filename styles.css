@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Allura&family=Caveat:wght@500;600&family=Inter:wght@400;500;700;800;900&family=Playfair+Display:wght@700;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Allura&family=Caveat:wght@500;600&family=Inter:wght@400;500;700;800;900&family=Playfair+Display:wght@700..900&display=swap");
 
 :root {
   --paper: #f3f6f1;
@@ -159,6 +159,7 @@ a {
   justify-self: start;
   gap: 0.12em;
   margin-top: clamp(18px, 2.4vw, 34px);
+  font-family: "Playfair Display", Georgia, "Times New Roman", serif;
   font-size: clamp(1.15rem, 2.7vw, 2.8rem);
   font-weight: 900;
   line-height: 1;
