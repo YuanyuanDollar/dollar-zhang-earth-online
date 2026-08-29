@@ -64,56 +64,9 @@ const initOnlineGlobe = () => {
     const camera = new THREE.PerspectiveCamera(34, 1, 0.1, 100);
     camera.position.set(0, 0, 4.1);
 
-    const textureCanvas = document.createElement("canvas");
-    textureCanvas.width = 1024;
-    textureCanvas.height = 512;
-    const context = textureCanvas.getContext("2d");
-    const ocean = context.createLinearGradient(0, 0, 0, textureCanvas.height);
-    ocean.addColorStop(0, "#3f8ee8");
-    ocean.addColorStop(0.48, "#1266bd");
-    ocean.addColorStop(1, "#073b85");
-    context.fillStyle = ocean;
-    context.fillRect(0, 0, textureCanvas.width, textureCanvas.height);
-
-    context.strokeStyle = "rgba(198, 229, 255, 0.16)";
-    context.lineWidth = 1;
-    for (let x = 0; x <= textureCanvas.width; x += 64) {
-      context.beginPath();
-      context.moveTo(x, 0);
-      context.lineTo(x, textureCanvas.height);
-      context.stroke();
-    }
-    for (let y = 64; y < textureCanvas.height; y += 64) {
-      context.beginPath();
-      context.moveTo(0, y);
-      context.lineTo(textureCanvas.width, y);
-      context.stroke();
-    }
-
-    const drawLand = (points, fill = "#62a957") => {
-      context.beginPath();
-      points.forEach(([x, y], index) => {
-        if (index === 0) context.moveTo(x, y);
-        else context.lineTo(x, y);
-      });
-      context.closePath();
-      context.fillStyle = fill;
-      context.fill();
-      context.strokeStyle = "rgba(226, 240, 170, 0.72)";
-      context.lineWidth = 3;
-      context.stroke();
-    };
-
-    drawLand([[80,105],[130,70],[196,82],[245,112],[222,146],[185,158],[165,194],[125,202],[96,168],[58,151]], "#5a9f52");
-    drawLand([[173,206],[218,220],[234,270],[219,323],[197,374],[181,432],[158,395],[149,337],[126,296],[142,245]], "#65aa55");
-    drawLand([[430,93],[494,66],[560,75],[610,92],[676,91],[735,121],[791,137],[830,175],[803,207],[743,211],[707,190],[665,211],[628,197],[594,213],[566,185],[521,183],[488,156],[447,149]], "#6caf57");
-    drawLand([[500,189],[551,198],[581,237],[570,282],[593,327],[557,388],[522,409],[484,364],[470,315],[448,272],[461,225]], "#63a651");
-    drawLand([[818,326],[866,314],[904,332],[928,363],[905,395],[858,406],[821,383],[798,349]], "#72b45c");
-    drawLand([[930,406],[947,399],[958,414],[948,430],[934,425]], "#72b45c");
-    drawLand([[360,68],[389,52],[418,61],[426,84],[394,99],[367,91]], "#83b965");
-    drawLand([[0,462],[160,448],[313,457],[470,445],[628,455],[788,446],[1024,460],[1024,512],[0,512]], "#d5e5cf");
-
-    const mapTexture = new THREE.CanvasTexture(textureCanvas);
+    /* Equirectangular world map baked from Natural Earth 50m coastlines.
+       Swap ./assets/globe-map.webp to restyle the planet. */
+    const mapTexture = new THREE.TextureLoader().load("./assets/globe-map.webp");
     mapTexture.wrapS = THREE.RepeatWrapping;
     mapTexture.anisotropy = Math.min(8, renderer.capabilities.getMaxAnisotropy());
     if (THREE.sRGBEncoding) mapTexture.encoding = THREE.sRGBEncoding;
@@ -124,11 +77,10 @@ const initOnlineGlobe = () => {
 
     const globe = new THREE.Mesh(
       new THREE.SphereGeometry(1, 64, 48),
-      new THREE.MeshPhongMaterial({
+      /* Lambert = diffuse only, so the globe never picks up a white hotspot */
+      new THREE.MeshLambertMaterial({
         map: mapTexture,
-        color: 0xffffff,
-        shininess: 42,
-        specular: new THREE.Color(0x9edaff)
+        color: 0x2c80d6
       })
     );
     globe.rotation.y = -1.75;
@@ -139,19 +91,17 @@ const initOnlineGlobe = () => {
       new THREE.MeshBasicMaterial({
         color: 0x7bc8ff,
         transparent: true,
-        opacity: 0.14,
+        opacity: 0.11,
         side: THREE.BackSide
       })
     );
     globeGroup.add(atmosphere);
 
-    scene.add(new THREE.HemisphereLight(0xd9efff, 0x08295b, 1.35));
-    const keyLight = new THREE.DirectionalLight(0xffffff, 1.65);
-    keyLight.position.set(-2.5, 2.8, 4);
-    scene.add(keyLight);
-    const rimLight = new THREE.DirectionalLight(0x4ea8ff, 0.75);
-    rimLight.position.set(3, -1, -2);
-    scene.add(rimLight);
+    /* even, flat lighting: enough shaping to read as a sphere, no glare */
+    scene.add(new THREE.AmbientLight(0xffffff, 0.86));
+    const fillLight = new THREE.DirectionalLight(0xffffff, 0.42);
+    fillLight.position.set(-1.6, 1.5, 3.2);
+    scene.add(fillLight);
 
     const resize = () => {
       const size = Math.max(32, Math.round(onlineGlobe.getBoundingClientRect().width));
