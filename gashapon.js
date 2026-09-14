@@ -1017,37 +1017,36 @@
   placeCoin();
   setState("idle");
 
-  /* ------------------------------------------------------- collapsed drawer
-     The module ships closed so the homepage scroll stays clean. Everything
-     inside is zero-height until then, so re-measure on the way open. */
+  /* ---------------------------------------------------------- entry + modal
+     The machine lives in a dialog so the homepage scroll stays clean.
+     Everything inside is zero-sized until the dialog opens, so the geometry
+     has to be re-measured on the way in. */
 
-  const shell = document.querySelector("[data-gasha-shell]");
-  const toggle = shell && shell.querySelector("[data-gasha-toggle]");
-  const collapse = shell && shell.querySelector("[data-gasha-collapse]");
+  const beyondDialog = document.querySelector("#beyondWorkDialog");
+  const beyondOpen = document.querySelector("[data-open-beyond]");
+  const beyondClose = document.querySelector("[data-close-beyond]");
+  const beyondPanel = document.querySelector("[data-beyond-panel]");
 
-  if (toggle && collapse) {
-    const setOpen = (open) => {
-      shell.classList.toggle("is-open", open);
-      toggle.setAttribute("aria-expanded", String(open));
-      if (open) collapse.removeAttribute("inert");
-      else collapse.setAttribute("inert", "");
-
-      if (!open) return;
-      /* once now so the first frame is right, once when the row finishes
-         growing so the coin and capsule land on the real geometry */
+  if (beyondDialog && beyondOpen) {
+    beyondOpen.addEventListener("click", () => {
+      if (beyondPanel) beyondPanel.scrollTop = 0;
+      beyondDialog.showModal();
+      document.body.classList.add("project-dialog-open");
+      /* once now so the first frame is right, again once the modal has settled */
       requestAnimationFrame(relayout);
-      window.setTimeout(relayout, 120);
-      window.setTimeout(relayout, 560);
-    };
-
-    toggle.addEventListener("click", () => {
-      setOpen(toggle.getAttribute("aria-expanded") !== "true");
+      window.setTimeout(relayout, 140);
+      window.setTimeout(relayout, 420);
     });
 
-    collapse.addEventListener("transitionend", (event) => {
-      if (event.propertyName === "grid-template-rows" && shell.classList.contains("is-open")) {
-        relayout();
-      }
+    if (beyondClose) beyondClose.addEventListener("click", () => beyondDialog.close());
+
+    beyondDialog.addEventListener("click", (event) => {
+      if (event.target === beyondDialog) beyondDialog.close();
+    });
+
+    beyondDialog.addEventListener("close", () => {
+      document.body.classList.remove("project-dialog-open");
+      beyondOpen.focus({ preventScroll: true });
     });
   }
 
