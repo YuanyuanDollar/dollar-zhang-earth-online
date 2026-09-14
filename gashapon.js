@@ -1017,6 +1017,40 @@
   placeCoin();
   setState("idle");
 
+  /* ------------------------------------------------------- collapsed drawer
+     The module ships closed so the homepage scroll stays clean. Everything
+     inside is zero-height until then, so re-measure on the way open. */
+
+  const shell = document.querySelector("[data-gasha-shell]");
+  const toggle = shell && shell.querySelector("[data-gasha-toggle]");
+  const collapse = shell && shell.querySelector("[data-gasha-collapse]");
+
+  if (toggle && collapse) {
+    const setOpen = (open) => {
+      shell.classList.toggle("is-open", open);
+      toggle.setAttribute("aria-expanded", String(open));
+      if (open) collapse.removeAttribute("inert");
+      else collapse.setAttribute("inert", "");
+
+      if (!open) return;
+      /* once now so the first frame is right, once when the row finishes
+         growing so the coin and capsule land on the real geometry */
+      requestAnimationFrame(relayout);
+      window.setTimeout(relayout, 120);
+      window.setTimeout(relayout, 560);
+    };
+
+    toggle.addEventListener("click", () => {
+      setOpen(toggle.getAttribute("aria-expanded") !== "true");
+    });
+
+    collapse.addEventListener("transitionend", (event) => {
+      if (event.propertyName === "grid-template-rows" && shell.classList.contains("is-open")) {
+        relayout();
+      }
+    });
+  }
+
   /* the machine image decides the stage height — re-measure once it has loaded */
   const machine = root.querySelector(".gasha-machine");
   if (machine && !machine.complete) {
